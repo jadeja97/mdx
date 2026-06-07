@@ -1,7 +1,7 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 
-import getConfig from "@/main";
+import { getConfig } from "@/main";
 
 import type { ReactElement } from "react";
 

@@ -2,7 +2,7 @@ import { sleep } from "@jadeja/ts/lib";
 import MiniSearch from "minisearch";
 import { useRef, useEffect, useState } from "react";
 
-import getConfig from "@/main";
+import { getConfig } from "@/main";
 
 import type { AsPlainObject, SearchResult } from "minisearch";
 

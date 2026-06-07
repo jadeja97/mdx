@@ -5,7 +5,7 @@ import { cwd } from "node:process";
 import MiniSearch from "minisearch";
 
 import { Singleton } from "@/lib/singleton";
-import getConfig from "@/main";
+import { getConfig } from "@/main";
 
 /* ============================================================================================= */
 

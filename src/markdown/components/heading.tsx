@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation.js";
 
 import type { ComponentProps, JSX, ReactElement } from "react";
 

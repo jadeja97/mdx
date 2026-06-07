@@ -1,23 +1,20 @@
-import { deepCopy, deepMergeObj } from "@jadeja/ts/lib";
+import { deepMergeObj } from "@jadeja/ts/lib";
 
 import { defaultConfig } from "@/config";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig, UserConfig } from "@/types";
 
 /* ============================================================================================= */
 
-const config = deepCopy(defaultConfig);
+const config = defaultConfig;
 
 /* ============================================================================================= */
 
-export const defineConfig = (userConfig: Partial<DocsConfig> = {}) => {
+export const defineConfig = (userConfig: Partial<UserConfig> = {}): Readonly<DocsConfig> => {
   deepMergeObj(config, userConfig);
+  return Object.freeze(config as DocsConfig);
 };
 
 /* ============================================================================================= */
 
-const getConfig = () => Object.freeze(config as DocsConfig);
-
-/* ============================================================================================= */
-
-export default getConfig;
+export const getConfig = () => Object.freeze(config as DocsConfig);

@@ -2,8 +2,8 @@
 
 /* ============================================================================================= */
 
-import { default as NextLink } from "next/link";
-import { usePathname } from "next/navigation";
+import { default as NextLink } from "next/link.js";
+import { usePathname } from "next/navigation.js";
 
 import type { LinkProps as NextLinkProps } from "next/link";
 import type { ReactElement, ComponentProps } from "react";

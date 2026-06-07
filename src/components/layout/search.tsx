@@ -5,22 +5,39 @@
 /* ============================================================================================= */
 
 import { debounce } from "@jadeja/ts/lib";
-import { useState, useEffect, startTransition, useRef } from "react";
+import { useState, useEffect, startTransition, useRef, createContext, useContext } from "react";
 
+import { XIcon } from "@/components/assets/icons";
 import { Button } from "@/components/button";
 import { DialogClose } from "@/components/dialog";
 import { Link } from "@/components/link";
 import { List } from "@/components/list";
 import { AlienLife } from "@/components/loaders/alien-life";
 import { ZZZZ } from "@/components/loaders/zzzz";
+import { Separator } from "@/components/separator";
 import { useSearch } from "@/hooks/use-search";
 import { cls } from "@/lib/dom/utils";
 
-import type { SearchResult as SearchResultItem } from "minisearch";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 import type { DialogCloseProps } from "@/components/dialog";
 import type { SearchQueryResult } from "@/hooks/use-search";
+
+/* ============================================================================================= */
+
+// oxlint-disable react/only-export-components
+export const SearchContext = createContext<SearchRootChildParams | null>(null);
+
+// oxlint-disable react/only-export-components
+export const useSearchContext = () => {
+  const context = useContext(SearchContext);
+
+  if (!context) {
+    throw new Error("components must be used inside SearchRoot");
+  }
+
+  return context;
+};
 
 /* ============================================================================================= */
 
@@ -36,7 +53,7 @@ export interface SearchRootChildParams {
 }
 
 export type SearchRootProps = {
-  children: (options: SearchRootChildParams) => ReactNode;
+  children: ReactNode;
 } & ComponentProps<"div">;
 
 export const SearchRoot = ({
@@ -75,63 +92,101 @@ export const SearchRoot = ({
   };
 
   return (
-    <div className={cls("search", className)} {...rest}>
-      {children({ search, ready, handleSearch, error, result })}
+    // oxlint-disable react/jsx-no-constructed-context-values
+    <SearchContext.Provider value={{ search, ready, handleSearch, error, result }}>
+      <div className={cls("search", className)} {...rest}>
+        {children}
+      </div>
+    </SearchContext.Provider>
+  );
+};
+
+/* ============================================================================================= */
+
+export const Search = (): ReturnType<typeof SearchRoot> => (
+  <SearchRoot>
+    <SearchCloseButton>
+      <XIcon />
+    </SearchCloseButton>
+
+    <SearchInput />
+
+    <SearchErrorRoot>
+      <SearchErrorMessage />
+    </SearchErrorRoot>
+
+    <SearchResult>
+      <SearchResultStates />
+      <Separator />
+      <SearchResultContainer>
+        <SearchResultNoContent />
+        <SearchResultListRoot>
+          <SearchResultList />
+        </SearchResultListRoot>
+      </SearchResultContainer>
+    </SearchResult>
+
+    <SearchLoaderRoot>
+      <SearchLoader />
+    </SearchLoaderRoot>
+  </SearchRoot>
+);
+
+/* ============================================================================================= */
+
+export type SearchErrorRootProps = {
+  children: ReactNode;
+} & ComponentProps<"div">;
+
+export const SearchErrorRoot = ({
+  className,
+  children,
+  ...rest
+}: SearchErrorRootProps): ReactElement<HTMLDivElement> | null => {
+  const { error } = useSearchContext();
+
+  if (!error) {
+    return null;
+  }
+
+  return (
+    <div className={cls("search-error", className)} {...rest}>
+      {children}
     </div>
   );
 };
 
 /* ============================================================================================= */
 
-export type SearchErrorProps = {
-  message: string;
-  children: (params: { message: string }) => ReactNode;
-} & ComponentProps<"div">;
-
-export const SearchError = ({
-  message,
-  className,
-  children,
-  ...rest
-}: SearchErrorProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("search-error", className)} {...rest}>
-    {children({ message })}
-  </div>
-);
-
-/* ============================================================================================= */
-
-export type SearchErrorMessageProps = {
-  message: string;
-} & ComponentProps<"p">;
+export type SearchErrorMessageProps = ComponentProps<"p">;
 
 export const SearchErrorMessage = ({
-  message,
   className,
   ...rest
-}: SearchErrorMessageProps): ReactElement<HTMLParagraphElement> => (
-  <p className={cls("search-error__message", className)} {...rest}>
-    {message || "Something went wrong!"}
-  </p>
-);
+}: SearchErrorMessageProps): ReactElement<HTMLParagraphElement> => {
+  const { error } = useSearchContext();
+  return (
+    <p className={cls("search-error__message", className)} {...rest}>
+      {error?.message ?? "Something went wrong!"}
+    </p>
+  );
+};
 
 /* ============================================================================================= */
 
-export type SearchInputProps = Pick<SearchRootChildParams, "ready" | "search" | "handleSearch"> &
-  ComponentProps<"div"> & {
-    input?: ComponentProps<"input">;
-  };
+export type SearchInputProps = ComponentProps<"div"> & {
+  input?: ComponentProps<"input">;
+};
 
 export const SearchInput = ({
-  ready,
-  search,
-  handleSearch,
   className,
   input,
   ...rest
 }: SearchInputProps): ReactElement<HTMLDivElement> => {
   //
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { ready, search, handleSearch } = useSearchContext();
 
   useEffect(() => {
     if (ready) {
@@ -160,67 +215,75 @@ export const SearchInput = ({
 
 /* ============================================================================================= */
 
-export type SearchResultProps = Pick<SearchRootChildParams, "result"> & {
-  children: (params: Pick<SearchRootChildParams, "result">) => ReactNode;
-} & ComponentProps<"div">;
+export type SearchResultProps = ComponentProps<"div">;
 
 export const SearchResult = ({
-  result,
   className,
   children,
   ...rest
-}: SearchResultProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("search-result", className)} {...rest}>
-    {children({ result })}
-  </div>
-);
+}: SearchResultProps): ReactElement<HTMLDivElement> | null => {
+  const { error, result } = useSearchContext();
+
+  if (!(!error && result)) {
+    return null;
+  }
+
+  return (
+    <div className={cls("search-result", className)} {...rest}>
+      {children}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
-export type SearchResultStatesProps = Pick<SearchRootChildParams, "result"> & ComponentProps<"div">;
+export type SearchResultStatesProps = ComponentProps<"div">;
 
 export const SearchResultStates = ({
-  result,
-}: SearchResultStatesProps): ReactElement<HTMLDivElement> => (
-  <div className="search-result__states">
-    <span>
-      Found {result?.count ?? 0} results in {((result?.time ?? 0) / 10).toFixed(2)} seconds
-    </span>{" "}
-    <br />
-    <span>Search isn&apos;t perfect. some results may be unrelated.</span>
-  </div>
-);
+  className,
+  ...rest
+}: SearchResultStatesProps): ReactElement<HTMLDivElement> => {
+  const { result } = useSearchContext();
+  return (
+    <div className={cls("search-result__states", className)} {...rest}>
+      <span>
+        Found {result?.count ?? 0} results in {((result?.time ?? 0) / 10).toFixed(2)} seconds
+      </span>{" "}
+      <br />
+      <span>Search isn&apos;t perfect. some results may be unrelated.</span>
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
-export type SearchResultContainerProps = Pick<SearchRootChildParams, "result"> & {
-  children: (params: Pick<SearchRootChildParams, "result">) => ReactNode;
+export type SearchResultContainerProps = {
+  children: ReactNode;
   scrollFade?: boolean;
 } & ComponentProps<"div">;
 
 export const SearchResultContainer = ({
-  result,
   scrollFade = true,
   children,
   className,
 }: SearchResultContainerProps): ReactElement<HTMLDivElement> => (
   <div className={cls("search-result__container", { "scroll-fade": scrollFade }, className)}>
-    {children({ result })}
+    {children}
   </div>
 );
 
 /* ============================================================================================= */
 
-export type SearchResultNoContentProps = Pick<SearchRootChildParams, "result"> & {
-  children: ReactNode;
+export type SearchResultNoContentProps = {
+  children?: ReactNode;
 } & ComponentProps<"p">;
 
 export const SearchResultNoContent = ({
-  result,
   children,
   className,
 }: SearchResultNoContentProps): ReactElement<HTMLParagraphElement> | null => {
   //
+  const { result } = useSearchContext();
 
   if ((result?.count ?? 0) > 0) {
     return null;
@@ -235,17 +298,17 @@ export const SearchResultNoContent = ({
 
 /* ============================================================================================= */
 
-export type SearchResultListProps = Pick<SearchRootChildParams, "result"> & {
-  children?: (params: { data: SearchResultItem }) => ReactNode;
+export type SearchResultListRootProps = {
+  children: ReactNode;
 } & ComponentProps<"ul">;
 
-export const SearchResultList = ({
-  result,
+export const SearchResultListRoot = ({
   children,
   className,
   ...rest
-}: SearchResultListProps): ReturnType<typeof List> | null => {
+}: SearchResultListRootProps): ReturnType<typeof List> | null => {
   //
+  const { result } = useSearchContext();
 
   if ((result?.count ?? 0) === 0) {
     return null;
@@ -253,22 +316,36 @@ export const SearchResultList = ({
 
   return (
     <List unstyled className={cls("search-result__list", className)} {...rest}>
+      {children}
+    </List>
+  );
+};
+
+/* ============================================================================================= */
+
+export type SearchResultListProps = ComponentProps<"li">;
+
+export const SearchResultList = (props: SearchResultListProps): ReactElement | null => {
+  //
+  const { result } = useSearchContext();
+
+  return (
+    // oxlint-disable react/jsx-no-useless-fragment
+    <>
       {result?.data?.map((data) => (
-        /* oxlint-disable typescript/no-unsafe-assignment */
-        <li key={data.id}>
-          {children?.({ data }) ?? (
-            <DialogClose isWrapper hideFocus>
-              {/* oxlint-disable typescript/no-unsafe-assignment */}
-              <Link href={data.url} title={data.title}>
-                <span className="link__label">{data.metaTitle ?? data.label}</span>
-                <span className="link__url">{data.url}</span>
-                <span className="link__confidence">Confidence: {data.score.toFixed(2)}%</span>
-              </Link>
-            </DialogClose>
-          )}
+        // oxlint-disable typescript/no-unsafe-assignment
+        <li key={data.id} {...props}>
+          <DialogClose isWrapper hideFocus>
+            {/* oxlint-disable typescript/no-unsafe-assignment */}
+            <Link href={data.url} title={data.title}>
+              <span className="link__label">{data.metaTitle ?? data.label}</span>
+              <span className="link__url">{data.url}</span>
+              <span className="link__confidence">Confidence: {data.score.toFixed(2)}%</span>
+            </Link>
+          </DialogClose>
         </li>
       ))}
-    </List>
+    </>
   );
 };
 
@@ -290,29 +367,31 @@ export const SearchCloseButton = ({
 
 /* ============================================================================================= */
 
-export type SearchLoaderRootProps = Pick<SearchRootChildParams, "ready" | "search"> & {
-  children: (params: Pick<SearchRootChildParams, "ready" | "search">) => ReactNode;
+export type SearchLoaderRootProps = {
+  children: ReactNode;
 } & ComponentProps<"div">;
 
 export const SearchLoaderRoot = ({
-  search,
-  ready,
   children,
-}: SearchLoaderRootProps): ReactElement<HTMLDivElement> => (
-  <div className="search-loader__wrapper">{children({ search, ready })}</div>
-);
+}: SearchLoaderRootProps): ReactElement<HTMLDivElement> | null => {
+  //
+  const { error, result } = useSearchContext();
+
+  if (!error && result) {
+    return null;
+  }
+
+  return <div className="search-loader__wrapper">{children}</div>;
+};
 
 /* ============================================================================================= */
 
-export type SearchLoadersProps = Pick<SearchRootChildParams, "ready" | "search"> &
-  ComponentProps<"div">;
+export type SearchLoaderProps = ComponentProps<"div">;
 
-export const SearchLoaders = ({
-  search,
-  ready,
-  ...rest
-}: SearchLoadersProps): ReactElement<HTMLDivElement> => {
+export const SearchLoader = ({ ...rest }: SearchLoaderProps): ReactElement<HTMLDivElement> => {
   //
+
+  const { search, ready } = useSearchContext();
 
   /* 1. no input */
   if (!search.trim() && ready) {

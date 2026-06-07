@@ -10,7 +10,6 @@ import pkg from "./package.json";
 
 const dontBundle = [
   // exclude all dependencies
-  ...Object.keys(pkg.dependencies || {}),
   ...Object.keys(pkg.peerDependencies || {}),
 
   // add all the node in-built modules list here which are used
@@ -52,11 +51,8 @@ const viteConfig = defineConfig({
 
     // mark as library
     lib: {
-      entry: {
-        config: resolve(import.meta.dirname, "./src/config/index.ts"),
-        types: resolve(import.meta.dirname, "./src/types/index.ts"),
-        main: resolve(import.meta.dirname, "./src/main.ts"),
-      },
+      // using `config.build.rolldownOptions.input`
+      entry: "",
 
       // minify whitespace is disabled for es format
       // https://vite.dev/config/build-options#build-minify
@@ -72,6 +68,9 @@ const viteConfig = defineConfig({
         ...createInputEntry("src/hooks/**/*.{ts,tsx}"),
         ...createInputEntry("src/lib/**/*.{ts,tsx}"),
         ...createInputEntry("src/markdown/**/*.{ts,tsx}"),
+        ...createInputEntry("src/main.ts"),
+        ...createInputEntry("src/types/index.ts"),
+        ...createInputEntry("src/config/index.ts"),
       },
       output: {
         preserveModules: true,

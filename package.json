@@ -6,27 +6,39 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.js"
+      "import": "./dist/main.js",
+      "default": "./dist/main.js",
+      "require": "./dist/main.js"
     },
     "./components/*": {
       "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.js"
+      "import": "./dist/components/*.js",
+      "default": "./dist/components/*.js",
+      "require": "./dist/components/*.js"
     },
     "./default-config": {
       "types": "./dist/conifg/index.d.ts",
-      "import": "./dist/config/index.js"
+      "import": "./dist/config/index.js",
+      "default": "./dist/config/index.js",
+      "require": "./dist/config/index.js"
     },
     "./hooks/*": {
       "types": "./dist/hooks/*.d.ts",
-      "import": "./dist/hooks/*.js"
+      "import": "./dist/hooks/*.js",
+      "default": "./dist/hooks/*.js",
+      "require": "./dist/hooks/*.js"
     },
     "./lib/*": {
       "types": "./dist/lib/*.d.ts",
-      "import": "./dist/lib/*.js"
+      "import": "./dist/lib/*.js",
+      "default": "./dist/lib/*.js",
+      "require": "./dist/lib/*.js"
     },
     "./markdown/*": {
       "types": "./dist/markdown/*.d.ts",
-      "import": "./dist/markdown/*.js"
+      "import": "./dist/markdown/*.js",
+      "default": "./dist/markdown/*.js",
+      "require": "./dist/markdown/*.js"
     },
     "./types": {
       "types": "./dist/types/index.d.ts"
@@ -69,6 +81,7 @@
     "next": "^16.2.6",
     "next-themes": "^0.4.6",
     "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",

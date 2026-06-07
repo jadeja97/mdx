@@ -20,23 +20,28 @@ export type CodeBlockWithoutLangProps = {
 export type CodeBlockProps = CodeBlockWithLangProps | CodeBlockWithoutLangProps;
 
 export const CodeBlock = (props: CodeBlockProps): ReactElement<HTMLElement | HTMLDivElement> => (
-  // oxlint-disable typescript/ban-ts-comment
-  // @ts-expect-error
+  // @ts-expect-error  suppress the error
   <CodeBlockRoot {...props}>
-    {({ title, content }) => (
-      <>
-        <CodeBlockHead title={title} content={content} />
-        <CodeBlockBody>{content}</CodeBlockBody>
-      </>
-    )}
+    <CodeBlockHead title={props.title} content={props.children} />
+    <CodeBlockBody>{props.children}</CodeBlockBody>
   </CodeBlockRoot>
 );
 
 /* ============================================================================================= */
 
-export type CodeBlockRootProps = CodeBlockProps & {
-  children: (params: { title?: string; content: string }) => ReactNode;
-};
+export type CodeBlockRootWithLangProps = {
+  lang?: string;
+  title?: string;
+  children: ReactNode;
+} & ComponentProps<"div">;
+
+export type CodeBlockRootWithoutLangProps = {
+  lang?: never;
+  title?: string;
+  children: string;
+} & ComponentProps<"code">;
+
+export type CodeBlockRootProps = CodeBlockRootWithLangProps | CodeBlockRootWithoutLangProps;
 
 export const CodeBlockRoot = (
   props: CodeBlockRootProps,
@@ -52,7 +57,7 @@ export const CodeBlockRoot = (
 
   return (
     <div className={cls("code-block", className)} data-lang={lang} {...rest}>
-      {children({ title, content: children })}
+      {children}
     </div>
   );
 };

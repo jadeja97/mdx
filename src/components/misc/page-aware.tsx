@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLayoutEffect } from "react";
 
 import { sanitizePathname } from "@/lib/dom/utils";
-import getConfig from "@/main";
+import { getConfig } from "@/main";
 
 import type { ReactElement } from "react";
 

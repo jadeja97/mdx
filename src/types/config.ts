@@ -65,6 +65,22 @@ export interface DocsConfig {
     socials: SocialLinks;
     authors: AuthorLinks;
   };
+  mdxConfig: NextMDXOptions;
+  mdxComponents?: {
+    HTMLElements?: MDXComponents;
+    TSXComponents?: MDXComponents;
+  };
+}
+
+export interface UserConfig {
+  analytics?: Partial<Analytics>;
+  constants: Partial<Constants>;
+  fonts: Partial<Record<"display" | "body" | "code", unknown> & Record<string, unknown>>;
+  links: {
+    navigations: NavLinks;
+    socials: SocialLinks;
+    authors: AuthorLinks;
+  };
   mdxConfig?: NextMDXOptions;
   mdxComponents?: {
     HTMLElements?: MDXComponents;
