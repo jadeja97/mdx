@@ -59,7 +59,6 @@ export type AuthorLinks = Record<
 export interface DocsConfig {
   analytics?: Analytics;
   constants: Constants;
-  fonts: Record<"display" | "body" | "code", unknown> & Record<string, unknown>;
   links: {
     navigations: NavLinks;
     socials: SocialLinks;
@@ -75,7 +74,6 @@ export interface DocsConfig {
 export interface UserConfig {
   analytics?: Partial<Analytics>;
   constants: Partial<Constants>;
-  fonts: Partial<Record<"display" | "body" | "code", unknown> & Record<string, unknown>>;
   links: {
     navigations: NavLinks;
     socials: SocialLinks;

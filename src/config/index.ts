@@ -1,5 +1,4 @@
 import { constants } from "@/config/constants";
-import { body, code, display } from "@/config/fonts";
 import { HTMLElements, TSXComponents } from "@/config/mdx-components";
 import { mdxConfig } from "@/config/mdx-config";
 
@@ -12,15 +11,6 @@ export const defaultConfig: Partial<DocsConfig> = {
    * constants used for configuration
    */
   constants,
-
-  /**
-   * options for google fonts (`next/font/google`)
-   */
-  fonts: {
-    display,
-    body,
-    code,
-  },
 
   /**
    * mdx processing configurations (`@next/mdx`)
