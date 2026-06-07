@@ -1,16 +1,19 @@
-import { cls } from "@/lib";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
 /* ============================================================================================= */
 
-type AlientLifeProps = ComponentProps<"div">;
+export type AlientLifeProps = ComponentProps<"div">;
 
 /*
 	author: andrew-manzyk
 	link: https://uiverse.io/andrew-manzyk/young-walrus-64
 */
-const AlienLife = ({ className, ...rest }: AlientLifeProps): ReactElement<HTMLDivElement> => (
+export const AlienLife = ({
+  className,
+  ...rest
+}: AlientLifeProps): ReactElement<HTMLDivElement> => (
   <div className={cls("alien-life", className)} {...rest}>
     <svg width="100" height="100" viewBox="0 0 100 100">
       <defs>
@@ -28,7 +31,3 @@ const AlienLife = ({ className, ...rest }: AlientLifeProps): ReactElement<HTMLDi
     <div className="box" />
   </div>
 );
-
-/* ============================================================================================= */
-
-export default AlienLife;

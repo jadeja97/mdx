@@ -1,24 +1,22 @@
-import createMDX from "@next/mdx";
-
 /* remark plugins */
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
-// oxlint-disable import/no-relative-parent-imports
-import remarkCodeMeta from "../plugins/remark-code-meta";
-// oxlint-disable import/no-relative-parent-imports
-import remarkTOC from "../plugins/remark-toc";
+import { remarkCodeMeta } from "@/markdown/plugins/remark-code-meta";
+import { remarkTOC } from "@/markdown/plugins/remark-toc";
 
 /* rehype plugins */
 import rehypeSlug from "rehype-slug";
 
+import type { NextMDXOptions } from "@next/mdx";
+
 /* ============================================================================================= */
 
 /**
- * configures the MDX parser with Markdown and HTML processing plugins.
+ * mdx processing configurations (`@next/mdx`)
  */
-const processMDX = createMDX({
+export const mdxConfig: NextMDXOptions = {
   options: {
     /* process markdown */
     remarkPlugins: [
@@ -33,8 +31,4 @@ const processMDX = createMDX({
     /* process html */
     rehypePlugins: [rehypeSlug],
   },
-});
-
-/* ============================================================================================= */
-
-export default processMDX;
+};

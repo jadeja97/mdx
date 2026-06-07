@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 
 /* ============================================================================================= */
 
-interface ClientProps {
+export interface ClientProps {
   children: ReactNode;
 }
 
@@ -20,7 +20,7 @@ interface ClientProps {
  *
  *   https://github.com/pacocoursey/next-themes?tab=readme-ov-file#avoid-hydration-mismatch
  */
-const Client = ({ children }: ClientProps): ReactNode => {
+export const Client = ({ children }: ClientProps): ReactNode => {
   //
   const [mounted, setMounted] = useState(false);
 
@@ -35,7 +35,3 @@ const Client = ({ children }: ClientProps): ReactNode => {
 
   return children;
 };
-
-/* ============================================================================================= */
-
-export default Client;

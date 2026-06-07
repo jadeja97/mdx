@@ -1,16 +1,16 @@
 import { Separator as BaseSeparator } from "@base-ui/react/separator";
 
-import { cls } from "@/lib/utils";
+import { cls } from "@/lib/dom/utils";
 
 import type { ReactElement } from "react";
 
 /* ============================================================================================= */
 
-type SeparatorProps = BaseSeparator.Props & {
+export type SeparatorProps = BaseSeparator.Props & {
   vertical?: boolean;
 };
 
-const Separator = ({
+export const Separator = ({
   className,
   vertical = false,
   ...rest
@@ -21,7 +21,3 @@ const Separator = ({
     className={cls("separator", className)}
   />
 );
-
-/* ============================================================================================= */
-
-export default Separator;

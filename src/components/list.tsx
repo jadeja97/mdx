@@ -4,24 +4,24 @@ import type { OlHTMLAttributes, HTMLAttributes, ReactElement } from "react";
 
 /* ============================================================================================= */
 
-interface SharedProps {
+export interface ListSharedProps {
   unstyled?: boolean;
   caption?: string;
 }
 
-type ULProps = SharedProps &
+export type ULProps = ListSharedProps &
   HTMLAttributes<HTMLUListElement> & {
     ordered?: false;
   };
 
-export type OLProps = SharedProps &
+export type OLProps = ListSharedProps &
   OlHTMLAttributes<HTMLOListElement> & {
     ordered: true;
   };
 
 export type ListProps = OLProps | ULProps;
 
-const List = ({
+export const List = ({
   ordered = false,
   unstyled = false,
   caption,
@@ -50,7 +50,7 @@ const List = ({
 
 /* ============================================================================================= */
 
-interface SharedPropsForCaptionList {
+export interface ListSharedPropsWithCaption {
   caption: string;
   unstyledProps: Partial<{
     role: "list";
@@ -58,19 +58,19 @@ interface SharedPropsForCaptionList {
   }>;
 }
 
-type OrderedProps = SharedPropsForCaptionList &
+export type OLPropsWithCaption = ListSharedPropsWithCaption &
   OlHTMLAttributes<HTMLOListElement> & {
     component: "ol";
   };
 
-type UnorderedProps = SharedPropsForCaptionList &
+export type ULPropsWithCaption = ListSharedPropsWithCaption &
   HTMLAttributes<HTMLUListElement> & {
     component: "ul";
   };
 
-type ListWithCaptionProps = OrderedProps | UnorderedProps;
+export type ListWithCaptionProps = OLPropsWithCaption | ULPropsWithCaption;
 
-const ListWithCaption = ({
+export const ListWithCaption = ({
   component: Component,
   caption,
   unstyledProps,
@@ -88,7 +88,3 @@ const ListWithCaption = ({
     </div>
   );
 };
-
-/* ============================================================================================= */
-
-export default List;

@@ -4,15 +4,15 @@
 
 import { useEffect, startTransition } from "react";
 
-import jumpScroll from "@/lib/jump-scroll";
+import { jumpScroll } from "@/lib/dom/jump-scroll";
 
 /* ============================================================================================= */
 
-interface ScrollToActiveTopicProps {
+export interface ScrollToActiveTopicProps {
   isMobile?: boolean;
 }
 
-const ScrollToActiveTopic = ({ isMobile = false }: ScrollToActiveTopicProps) => {
+export const ScrollToActiveTopic = ({ isMobile = false }: ScrollToActiveTopicProps) => {
   //
   useEffect(() => {
     startTransition(() => {
@@ -20,18 +20,11 @@ const ScrollToActiveTopic = ({ isMobile = false }: ScrollToActiveTopicProps) => 
       const container = document.querySelector(
         `.topics__wrapper--${isMobile ? "mobile" : "desktop"}`,
       );
-      const activeElements = container?.querySelector(`[data-active]`);
+      const element = container?.querySelector(`[data-active]`);
 
-      jumpScroll({
-        container,
-        element: activeElements,
-      });
+      jumpScroll({ container, element });
     });
   }, [isMobile]);
 
   return null;
 };
-
-/* ============================================================================================= */
-
-export default ScrollToActiveTopic;

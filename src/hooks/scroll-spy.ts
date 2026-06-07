@@ -2,15 +2,13 @@ import { startTransition, useRef, useEffect, useState } from "react";
 
 /* ============================================================================================= */
 
-interface ScrollSpyOptions {
+export interface ScrollSpyOptions {
   tocIds: string[];
   scrollContainer: string;
   offset: number;
 }
 
-/* ============================================================================================= */
-
-const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptions) => {
+export const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptions) => {
   //
   const observer = useRef<IntersectionObserver>(null);
 
@@ -86,6 +84,7 @@ const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptions) => 
     return () => {
       disconnect();
     };
+    // oxlint-disable react-hooks/exhaustive-deps
   }, [start, tocIds, scrollContainer, offset]);
 
   return {
@@ -95,7 +94,3 @@ const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptions) => 
     },
   };
 };
-
-/* ============================================================================================= */
-
-export default useScrollSpy;

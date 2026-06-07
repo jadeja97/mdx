@@ -7,8 +7,8 @@ import { cwd } from "node:process";
 import { throwError } from "@jadeja/ts/lib";
 import frontMatter from "front-matter";
 
-import Search from "@/lib/search";
-import Singleton from "@/lib/singleton";
+import { Search } from "@/lib/search";
+import { Singleton } from "@/lib/singleton";
 
 import type {
   AddMetaOptions,
@@ -41,7 +41,7 @@ import type { Metadata } from "@/types/docs";
  * - `instance.getFileInfo`
  * - `instance.getNeighbours`
  */
-class Content {
+export class Content {
   //
   private paths!: Paths;
   private slugs!: Slugs;
@@ -406,7 +406,3 @@ class Content {
     };
   }
 }
-
-/* ============================================================================================= */
-
-export default Content;

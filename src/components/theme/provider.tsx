@@ -4,7 +4,7 @@ import type { ThemeProviderProps } from "next-themes";
 
 /* ============================================================================================= */
 
-const ThemeProvider = (props: ThemeProviderProps): ReturnType<typeof NextThemeProvider> => (
+export const ThemeProvider = (props: ThemeProviderProps): ReturnType<typeof NextThemeProvider> => (
   <NextThemeProvider
     attribute="class"
     enableColorScheme
@@ -16,7 +16,3 @@ const ThemeProvider = (props: ThemeProviderProps): ReturnType<typeof NextThemePr
     {...props}
   />
 );
-
-/* ============================================================================================= */
-
-export default ThemeProvider;

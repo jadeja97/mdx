@@ -16,11 +16,11 @@ export type LinkProps = ComponentProps<"a"> &
     "data-active"?: boolean;
   };
 
-type LinkAttrs = ComponentProps<"a"> & {
+export type LinkAttrs = ComponentProps<"a"> & {
   href: LinkProps["href"];
 };
 
-const Link = ({ href, navLink, ...rest }: LinkProps): ReactElement<HTMLAnchorElement> => {
+export const Link = ({ href, navLink, ...rest }: LinkProps): ReactElement<HTMLAnchorElement> => {
   //
   const pathname = usePathname();
 
@@ -73,7 +73,3 @@ const Link = ({ href, navLink, ...rest }: LinkProps): ReactElement<HTMLAnchorEle
     />
   );
 };
-
-/* ============================================================================================= */
-
-export default Link;

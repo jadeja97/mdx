@@ -4,14 +4,14 @@ import { visit } from "unist-util-visit";
 
 import type { Root } from "mdast";
 
-import type { TOC } from "@/types/lib/docs";
+import type { TOC } from "@/types/docs";
 
 /* ============================================================================================= */
 
 /**
  * remark plugin to export table of content (toc) from `.mdx` files
  */
-const remarkTOC = () => (tree: Root) => {
+export const remarkTOC = () => (tree: Root) => {
   const slugger = new GithubSlugger();
   const toc: TOC[] = [];
 
@@ -44,6 +44,8 @@ const remarkTOC = () => (tree: Root) => {
 
   // export toc from `.mdx` files
   tree.children.push({
+    // oxlint-disable typescript/ban-ts-comment
+    // @ts-expect-error
     type: "mdxjsEsm",
     // NOTE: with `value` only, `toc` is not exported. throwing error.
     value: `export const toc = ${safeStr};`,
@@ -79,7 +81,3 @@ const remarkTOC = () => (tree: Root) => {
     },
   });
 };
-
-/* ============================================================================================= */
-
-export default remarkTOC;

@@ -4,9 +4,8 @@ import {
   MegaphoneFillIcon,
   RadioActiveFillIcon,
   TrafficConeFillIcon,
-} from "@icons";
-
-import { cls, cva } from "@/lib/utils";
+} from "@/components/assets/icons";
+import { cls, cva } from "@/lib/dom/utils";
 
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentProps, ReactElement } from "react";
@@ -15,7 +14,8 @@ import type { SVGEl, SVGProps } from "@/components/svg";
 
 /* ============================================================================================= */
 
-export const variants = cva("alert", {
+// oxlint-disable react/only-export-components
+export const alertVariants = cva("alert", {
   variants: {
     //
     variant: {
@@ -38,47 +38,48 @@ export const variants = cva("alert", {
 
 /* ============================================================================================= */
 
-type AlertProps = RootProps;
+export type AlertProps = RootProps;
 
 // NOTE: add `has-icon` class. this will help with `:has`.
 // `:has` not supported yet in Shilp CSS baseline.
-const Alert = ({
+export const Alert = ({
   variant,
   hasIcon = true,
   title,
   children,
   ...rest
-}: AlertProps): ReactElement<ReturnType<typeof Root>> => (
-  <Root {...rest} hasIcon={hasIcon} variant={variant}>
+}: AlertProps): ReactElement<ReturnType<typeof AlertRoot>> => (
+  <AlertRoot {...rest} hasIcon={hasIcon} variant={variant}>
     {/*  */}
-    {hasIcon && <Icon variant={variant} />}
+    {hasIcon && <AlertIcon variant={variant} />}
 
-    <Title variant={variant}>{title}</Title>
+    <AlertTitle variant={variant}>{title}</AlertTitle>
 
-    {children && <Description>{children}</Description>}
-  </Root>
+    {children && <AlertDescription>{children}</AlertDescription>}
+  </AlertRoot>
 );
 
 /* ============================================================================================= */
 
-type RootProps = ComponentProps<"div"> & VariantProps<typeof variants>;
+export type RootProps = ComponentProps<"div"> & VariantProps<typeof alertVariants>;
 
 // NOTE: add `has-icon` class. this will help with `:has`.
 // `:has` not supported yet in Shilp CSS baseline.
-export const Root = ({
+export const AlertRoot = ({
   className,
   variant,
   hasIcon,
   ...rest
 }: RootProps): ReactElement<HTMLDivElement> => (
-  <div {...rest} role="alert" className={cls(variants({ variant, hasIcon }), className)} />
+  <div {...rest} role="alert" className={cls(alertVariants({ variant, hasIcon }), className)} />
 );
 
 /* ============================================================================================= */
 
-type IconProps = ComponentProps<"svg"> & Pick<VariantProps<typeof variants>, "variant">;
+export type IconProps = ComponentProps<"svg"> & Pick<VariantProps<typeof alertVariants>, "variant">;
 
-const getIcon = <T,>(variant: T): ((props: SVGProps) => SVGEl) => {
+// oxlint-disable react/only-export-components
+export const getIcon = <T,>(variant: T): ((props: SVGProps) => SVGEl) => {
   switch (variant) {
     case "info":
       return MegaphoneFillIcon;
@@ -93,7 +94,7 @@ const getIcon = <T,>(variant: T): ((props: SVGProps) => SVGEl) => {
   }
 };
 
-export const Icon = ({ variant, ...rest }: IconProps): SVGEl => {
+export const AlertIcon = ({ variant, ...rest }: IconProps): SVGEl => {
   // oxlint-disable react-hooks-js/static-components
   const Component = getIcon(variant);
 
@@ -102,9 +103,9 @@ export const Icon = ({ variant, ...rest }: IconProps): SVGEl => {
 
 /* ============================================================================================= */
 
-type TitleProps = ComponentProps<"div"> & Pick<VariantProps<typeof alert>, "variant">;
+export type TitleProps = ComponentProps<"div"> & Pick<VariantProps<typeof alert>, "variant">;
 
-export const Title = ({
+export const AlertTitle = ({
   children,
   className,
   variant,
@@ -117,15 +118,11 @@ export const Title = ({
 
 /* ============================================================================================= */
 
-type DescriptionProps = ComponentProps<"div">;
+export type DescriptionProps = ComponentProps<"div">;
 
-export const Description = ({
+export const AlertDescription = ({
   className,
   ...rest
 }: DescriptionProps): ReactElement<HTMLDivElement> => (
   <div {...rest} className={cls("alert__description", className)} />
 );
-
-/* ============================================================================================= */
-
-export default Alert;

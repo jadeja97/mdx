@@ -5,7 +5,7 @@ import type { Constants } from "@/types";
 /**
  * constants used for configuration
  */
-const constants: Constants = {
+export const constants: Constants = {
   /**
    * site version from `package.json`
    */
@@ -57,7 +57,3 @@ const constants: Constants = {
    */
   SEARCH_INDEX_RETURN_FIELDS: ["title", "label", "url", "metaTitle", "metaDescription"],
 };
-
-/* ============================================================================================= */
-
-export default constants;

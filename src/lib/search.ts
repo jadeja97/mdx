@@ -4,7 +4,7 @@ import { cwd } from "node:process";
 
 import MiniSearch from "minisearch";
 
-import Singleton from "@/lib/singleton";
+import { Singleton } from "@/lib/singleton";
 import getConfig from "@/main";
 
 /* ============================================================================================= */
@@ -21,7 +21,7 @@ const { SEARCH_INDEX_FIELDS, SEARCH_INDEX_PATH, SEARCH_INDEX_RETURN_FIELDS } =
  *
  * - `instance.ingest`
  */
-class Search {
+export class Search {
   //
   private miniSearchInstance!: MiniSearch;
 
@@ -68,7 +68,3 @@ class Search {
     writeFileSync(searchIndexPath, JSON.stringify(serachContent));
   }
 }
-
-/* ============================================================================================= */
-
-export default Search;

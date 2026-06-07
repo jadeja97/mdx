@@ -1,16 +1,16 @@
-import { cls } from "@/lib";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
 /* ============================================================================================= */
 
-type ZZZZProps = ComponentProps<"div">;
+export type ZZZZProps = ComponentProps<"div">;
 
 /*
 	author: necatimertmetin
 	link: https://uiverse.io/necatimertmetin/quiet-bulldog-16
 */
-const ZZZZ = ({ className, ...rest }: ZZZZProps): ReactElement<HTMLDivElement> => (
+export const ZZZZ = ({ className, ...rest }: ZZZZProps): ReactElement<HTMLDivElement> => (
   <div className={cls("zzzz", className)} {...rest}>
     <div>z</div>
     <div>z</div>
@@ -18,7 +18,3 @@ const ZZZZ = ({ className, ...rest }: ZZZZProps): ReactElement<HTMLDivElement> =
     <div>z</div>
   </div>
 );
-
-/* ============================================================================================= */
-
-export default ZZZZ;

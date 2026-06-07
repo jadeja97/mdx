@@ -7,7 +7,7 @@ import type { Root } from "mdast";
 /**
  * remark plugin to extract code metadata as props
  */
-const remarkCodeMeta = () => (tree: Root) => {
+export const remarkCodeMeta = () => (tree: Root) => {
   visit(tree, "code", (node) => {
     // filter backtick code (``)
     // it doesn't have `lang`
@@ -20,7 +20,10 @@ const remarkCodeMeta = () => (tree: Root) => {
 
     // expose props to `code` element
     // hProperties passed as serialized
+    // oxlint-disable typescript/no-unsafe-assignment, typescript/ban-ts-comment
+    // @ts-expect-error
     node.data.hProperties = {
+      // @ts-expect-error
       ...node.data.hProperties,
       lang: node.lang,
       // rawValue: node.value,
@@ -36,7 +39,7 @@ const remarkCodeMeta = () => (tree: Root) => {
  *
  * @param meta - code metadata string
  */
-const processMeta = <T>(meta: T) => {
+export const processMeta = <T>(meta: T) => {
   //
   const result: Record<string, string | boolean> = {};
 
@@ -58,7 +61,3 @@ const processMeta = <T>(meta: T) => {
 
   return result;
 };
-
-/* ============================================================================================= */
-
-export default remarkCodeMeta;

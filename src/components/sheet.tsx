@@ -1,8 +1,8 @@
 import { Dialog as Sheet } from "@base-ui/react/dialog";
 
 import { XIcon } from "@/components/assets/icons";
-import Button from "@/components/button";
-import { cls } from "@/lib/utils";
+import { Button } from "@/components/button";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
@@ -18,7 +18,7 @@ export const SheetPortal = Sheet.Portal;
 
 /* ============================================================================================= */
 
-type SheetTriggerProps = Sheet.Trigger.Props;
+export type SheetTriggerProps = Sheet.Trigger.Props;
 
 export const SheetTrigger = ({
   className,
@@ -29,7 +29,7 @@ export const SheetTrigger = ({
 
 /* ============================================================================================= */
 
-type SheetCloseProps = Sheet.Close.Props & {
+export type SheetCloseProps = Sheet.Close.Props & {
   hideCloseButton?: boolean;
   isWrapper?: boolean;
   hideFocus?: boolean;
@@ -58,7 +58,7 @@ export const SheetClose = ({
 
 /* ============================================================================================= */
 
-type SheetOverlayProps = Sheet.Backdrop.Props;
+export type SheetOverlayProps = Sheet.Backdrop.Props;
 
 export const SheetOverlay = ({
   className,
@@ -69,7 +69,7 @@ export const SheetOverlay = ({
 
 /* ============================================================================================= */
 
-type SheetContentProps = Sheet.Popup.Props & {
+export type SheetContentProps = Sheet.Popup.Props & {
   portal?: Sheet.Portal.Props;
   side?: "left" | "right" | "top" | "bottom";
   hideCloseButton?: boolean;
@@ -108,7 +108,7 @@ export const SheetContent = ({
 
 /* ============================================================================================= */
 
-type SheetHeaderProps = ComponentProps<"div">;
+export type SheetHeaderProps = ComponentProps<"div">;
 
 export const SheetHeader = ({
   className,
@@ -119,7 +119,7 @@ export const SheetHeader = ({
 
 /* ============================================================================================= */
 
-type SheetFooterProps = ComponentProps<"div">;
+export type SheetFooterProps = ComponentProps<"div">;
 
 export const SheetFooter = ({
   className,
@@ -130,7 +130,7 @@ export const SheetFooter = ({
 
 /* ============================================================================================= */
 
-type SheetTitleProps = Sheet.Title.Props;
+export type SheetTitleProps = Sheet.Title.Props;
 
 export const SheetTitle = ({
   className,
@@ -141,7 +141,7 @@ export const SheetTitle = ({
 
 /* ============================================================================================= */
 
-type SheetDescriptionProps = Sheet.Description.Props;
+export type SheetDescriptionProps = Sheet.Description.Props;
 
 export const SheetDescription = ({
   className,

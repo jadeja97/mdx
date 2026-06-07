@@ -1,6 +1,7 @@
-import type { JumpScroll } from "@/types";
-
-/* ============================================================================================= */
+export interface JumpScroll {
+  container?: Element | null;
+  element?: Element | null;
+}
 
 /**
  * jump to the element position instead of scrolling or relying on `scrollIntoView`
@@ -9,7 +10,7 @@ import type { JumpScroll } from "@/types";
  * @param options.container - scroll container (dom element)
  * @param options.element - item in scroll container (dom element)
  */
-const jumpScroll = ({ container, element }: JumpScroll) => {
+export const jumpScroll = ({ container, element }: JumpScroll) => {
   //
   if (!container || !element) {
     return;
@@ -39,7 +40,3 @@ const jumpScroll = ({ container, element }: JumpScroll) => {
   // 	});
   // }
 };
-
-/* ============================================================================================= */
-
-export default jumpScroll;

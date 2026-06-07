@@ -1,24 +1,23 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@icons";
-
-import { variants as btnVariants } from "@/components/button";
-import Link from "@/components/link";
-import { cls } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/assets/icons";
+import { buttonVariants } from "@/components/button";
+import { Link } from "@/components/link";
+import { cls } from "@/lib/dom/utils";
 
 import type { ReactElement } from "react";
 
-import type { Neighbours } from "@/types/lib/content";
+import type { Neighbours as NeighboursType } from "@/types/content";
 
 /* ============================================================================================= */
 
-type NeighboursProps = Neighbours;
+export type NeighboursProps = NeighboursType;
 
-const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDivElement> => (
+export const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDivElement> => (
   //
 
   <div className="page__neighbours">
     {prev && (
       <Link
-        className={cls("prev-btn", btnVariants({ variant: "outline" }))}
+        className={cls("prev-btn", buttonVariants({ variant: "outline" }))}
         href={prev.url}
         title={prev.title}
       >
@@ -28,7 +27,7 @@ const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDivElemen
 
     {next && (
       <Link
-        className={cls("next-btn", btnVariants({ variant: "outline" }))}
+        className={cls("next-btn", buttonVariants({ variant: "outline" }))}
         href={next.url}
         title={next.title}
       >
@@ -37,7 +36,3 @@ const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDivElemen
     )}
   </div>
 );
-
-/* ============================================================================================= */
-
-export default Neighbours;

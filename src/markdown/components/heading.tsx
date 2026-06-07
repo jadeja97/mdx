@@ -6,13 +6,16 @@ import type { ComponentProps, JSX, ReactElement } from "react";
 
 /* ============================================================================================= */
 
-type HeadingTag = keyof Pick<JSX.IntrinsicElements, "h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
+export type HeadingTag = keyof Pick<JSX.IntrinsicElements, "h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
 
-type HeadingsProps = ComponentProps<HeadingTag> & {
+export type HeadingsProps = ComponentProps<HeadingTag> & {
   as: HeadingTag;
 };
 
-const Headings = ({ as: Component, ...rest }: HeadingsProps): ReactElement<HTMLHeadingElement> => {
+export const Headings = ({
+  as: Component,
+  ...rest
+}: HeadingsProps): ReactElement<HTMLHeadingElement> => {
   //
   const pathname = usePathname();
   const router = useRouter();
@@ -29,7 +32,3 @@ const Headings = ({ as: Component, ...rest }: HeadingsProps): ReactElement<HTMLH
 
   return <Component {...rest} onClick={handleClick} />;
 };
-
-/* ============================================================================================= */
-
-export default Headings;

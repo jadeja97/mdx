@@ -1,8 +1,8 @@
 import { Dialog } from "@base-ui/react/dialog";
 
 import { XIcon } from "@/components/assets/icons";
-import Button from "@/components/button";
-import { cls } from "@/lib/utils";
+import { Button } from "@/components/button";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
@@ -18,7 +18,7 @@ export const DialogPortal = Dialog.Portal;
 
 /* ============================================================================================= */
 
-type DialogTriggerProps = Dialog.Trigger.Props;
+export type DialogTriggerProps = Dialog.Trigger.Props;
 
 export const DialogTrigger = ({
   className,
@@ -58,7 +58,7 @@ export const DialogClose = ({
 
 /* ============================================================================================= */
 
-type DialogOverlayProps = Dialog.Backdrop.Props;
+export type DialogOverlayProps = Dialog.Backdrop.Props;
 
 export const DialogOverlay = ({
   className,
@@ -69,7 +69,7 @@ export const DialogOverlay = ({
 
 /* ============================================================================================= */
 
-type DialogContentProps = Dialog.Popup.Props & {
+export type DialogContentProps = Dialog.Popup.Props & {
   portal?: Dialog.Portal.Props;
   hideCloseButton?: boolean;
   overlay?: DialogOverlayProps;
@@ -106,7 +106,7 @@ export const DialogContent = ({
 
 /* ============================================================================================= */
 
-type DialogHeaderProps = ComponentProps<"div">;
+export type DialogHeaderProps = ComponentProps<"div">;
 
 export const DialogHeader = ({
   className,
@@ -117,7 +117,7 @@ export const DialogHeader = ({
 
 /* ============================================================================================= */
 
-type DialogFooterProps = ComponentProps<"div">;
+export type DialogFooterProps = ComponentProps<"div">;
 
 export const DialogFooter = ({
   className,
@@ -128,7 +128,7 @@ export const DialogFooter = ({
 
 /* ============================================================================================= */
 
-type DialogTitleProps = Dialog.Title.Props;
+export type DialogTitleProps = Dialog.Title.Props;
 
 export const DialogTitle = ({
   className,
@@ -139,7 +139,7 @@ export const DialogTitle = ({
 
 /* ============================================================================================= */
 
-type DialogDescriptionProps = Dialog.Description.Props;
+export type DialogDescriptionProps = Dialog.Description.Props;
 
 export const DialogDescription = ({
   className,

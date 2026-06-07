@@ -14,7 +14,7 @@ const { SEARCH_INDEX_PATH, DEV, SEARCH_INDEX_FIELDS, SEARCH_INDEX_RETURN_FIELDS 
 /* ============================================================================================= */
 
 // to improve UX (if not added, the results will be snappy)
-const QUERY_ARTIFICIAL_DELAY = 250;
+export const QUERY_ARTIFICIAL_DELAY = 250;
 
 /* ============================================================================================= */
 
@@ -27,7 +27,7 @@ export interface SearchQueryResult {
 /**
  * load the search index and a method to query
  */
-const useSearch = () => {
+export const useSearch = () => {
   //
   const instance = useRef<MiniSearch>(null);
   const abortController = useRef<AbortController>(null);
@@ -154,7 +154,3 @@ const useSearch = () => {
     query,
   };
 };
-
-/* ============================================================================================= */
-
-export default useSearch;

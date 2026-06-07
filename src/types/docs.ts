@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
-import type Content from "@/lib/content";
-import type { FileInfo, Neighbours } from "@/types/lib/content";
+import type { Content } from "@/lib/content";
+import type { FileInfo, Neighbours } from "@/types/content";
 
 /* ============================================================================================= */
 

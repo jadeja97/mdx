@@ -1,4 +1,4 @@
-import { cls } from "@/lib";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 
@@ -27,7 +27,3 @@ type HeaderProps = {
 export const Header = ({ children, ...rest }: HeaderProps): ReactElement<HTMLDivElement> => (
   <header {...rest}>{children}</header>
 );
-
-/* ============================================================================================= */
-
-export default Header;

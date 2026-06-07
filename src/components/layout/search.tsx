@@ -7,14 +7,14 @@
 import { debounce } from "@jadeja/ts/lib";
 import { useState, useEffect, startTransition, useRef } from "react";
 
-import Button from "@/components/button";
+import { Button } from "@/components/button";
 import { DialogClose } from "@/components/dialog";
-import Link from "@/components/link";
-import List from "@/components/list";
-import AlienLife from "@/components/loaders/alien-life";
-import ZZZZ from "@/components/loaders/zzzz";
-import useSearch from "@/hooks/use-search";
-import { cls } from "@/lib";
+import { Link } from "@/components/link";
+import { List } from "@/components/list";
+import { AlienLife } from "@/components/loaders/alien-life";
+import { ZZZZ } from "@/components/loaders/zzzz";
+import { useSearch } from "@/hooks/use-search";
+import { cls } from "@/lib/dom/utils";
 
 import type { SearchResult as SearchResultItem } from "minisearch";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
@@ -24,7 +24,7 @@ import type { SearchQueryResult } from "@/hooks/use-search";
 
 /* ============================================================================================= */
 
-interface SearchChildParams {
+export interface SearchRootChildParams {
   search: string;
   ready: boolean;
   handleSearch: (text: string) => void;
@@ -35,15 +35,15 @@ interface SearchChildParams {
   result: SearchQueryResult | undefined;
 }
 
-type SearchProps = {
-  children: (options: SearchChildParams) => ReactNode;
+export type SearchRootProps = {
+  children: (options: SearchRootChildParams) => ReactNode;
 } & ComponentProps<"div">;
 
-export const Search = ({
+export const SearchRoot = ({
   children,
   className,
   ...rest
-}: SearchProps): ReactElement<HTMLDivElement> => {
+}: SearchRootProps): ReactElement<HTMLDivElement> => {
   //
   const { initialize, ready, error, query } = useSearch();
 
@@ -83,7 +83,7 @@ export const Search = ({
 
 /* ============================================================================================= */
 
-type SearchErrorProps = {
+export type SearchErrorProps = {
   message: string;
   children: (params: { message: string }) => ReactNode;
 } & ComponentProps<"div">;
@@ -101,7 +101,7 @@ export const SearchError = ({
 
 /* ============================================================================================= */
 
-type SearchErrorMessageProps = {
+export type SearchErrorMessageProps = {
   message: string;
 } & ComponentProps<"p">;
 
@@ -117,7 +117,7 @@ export const SearchErrorMessage = ({
 
 /* ============================================================================================= */
 
-type SearchInputProps = Pick<SearchChildParams, "ready" | "search" | "handleSearch"> &
+export type SearchInputProps = Pick<SearchRootChildParams, "ready" | "search" | "handleSearch"> &
   ComponentProps<"div"> & {
     input?: ComponentProps<"input">;
   };
@@ -160,8 +160,8 @@ export const SearchInput = ({
 
 /* ============================================================================================= */
 
-type SearchResultProps = Pick<SearchChildParams, "result"> & {
-  children: (params: Pick<SearchChildParams, "result">) => ReactNode;
+export type SearchResultProps = Pick<SearchRootChildParams, "result"> & {
+  children: (params: Pick<SearchRootChildParams, "result">) => ReactNode;
 } & ComponentProps<"div">;
 
 export const SearchResult = ({
@@ -177,7 +177,7 @@ export const SearchResult = ({
 
 /* ============================================================================================= */
 
-type SearchResultStatesProps = Pick<SearchChildParams, "result"> & ComponentProps<"div">;
+export type SearchResultStatesProps = Pick<SearchRootChildParams, "result"> & ComponentProps<"div">;
 
 export const SearchResultStates = ({
   result,
@@ -193,8 +193,8 @@ export const SearchResultStates = ({
 
 /* ============================================================================================= */
 
-type SearchResultContainerProps = Pick<SearchChildParams, "result"> & {
-  children: (params: Pick<SearchChildParams, "result">) => ReactNode;
+export type SearchResultContainerProps = Pick<SearchRootChildParams, "result"> & {
+  children: (params: Pick<SearchRootChildParams, "result">) => ReactNode;
   scrollFade?: boolean;
 } & ComponentProps<"div">;
 
@@ -211,7 +211,7 @@ export const SearchResultContainer = ({
 
 /* ============================================================================================= */
 
-type SearchResultNoContentProps = Pick<SearchChildParams, "result"> & {
+export type SearchResultNoContentProps = Pick<SearchRootChildParams, "result"> & {
   children: ReactNode;
 } & ComponentProps<"p">;
 
@@ -235,7 +235,7 @@ export const SearchResultNoContent = ({
 
 /* ============================================================================================= */
 
-type SearchResultListProps = Pick<SearchChildParams, "result"> & {
+export type SearchResultListProps = Pick<SearchRootChildParams, "result"> & {
   children?: (params: { data: SearchResultItem }) => ReactNode;
 } & ComponentProps<"ul">;
 
@@ -274,7 +274,7 @@ export const SearchResultList = ({
 
 /* ============================================================================================= */
 
-type SearchCloseButtonProps = {
+export type SearchCloseButtonProps = {
   children: ReactNode;
 } & DialogCloseProps;
 
@@ -290,8 +290,8 @@ export const SearchCloseButton = ({
 
 /* ============================================================================================= */
 
-type SearchLoaderRootProps = Pick<SearchChildParams, "ready" | "search"> & {
-  children: (params: Pick<SearchChildParams, "ready" | "search">) => ReactNode;
+export type SearchLoaderRootProps = Pick<SearchRootChildParams, "ready" | "search"> & {
+  children: (params: Pick<SearchRootChildParams, "ready" | "search">) => ReactNode;
 } & ComponentProps<"div">;
 
 export const SearchLoaderRoot = ({
@@ -304,7 +304,8 @@ export const SearchLoaderRoot = ({
 
 /* ============================================================================================= */
 
-type SearchLoadersProps = Pick<SearchChildParams, "ready" | "search"> & ComponentProps<"div">;
+export type SearchLoadersProps = Pick<SearchRootChildParams, "ready" | "search"> &
+  ComponentProps<"div">;
 
 export const SearchLoaders = ({
   search,

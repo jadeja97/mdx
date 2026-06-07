@@ -6,18 +6,18 @@ import { debounce } from "@jadeja/ts/lib";
 import { useState } from "react";
 
 import { CheckIcon, CopyIcon } from "@/components/assets/icons";
-import Button from "@/components/button";
-import { cls } from "@/lib";
+import { Button } from "@/components/button";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
 /* ============================================================================================= */
 
-type CopyToClipboardProps = {
+export type CopyToClipboardProps = {
   text: string;
 } & ComponentProps<"button">;
 
-const CopyToClipboard = ({
+export const CopyToClipboard = ({
   text,
   className,
   ...rest
@@ -67,7 +67,3 @@ const CopyToClipboard = ({
     </Button>
   );
 };
-
-/* ============================================================================================= */
-
-export default CopyToClipboard;

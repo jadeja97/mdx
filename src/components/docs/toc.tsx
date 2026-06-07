@@ -4,25 +4,25 @@
 
 import { startTransition, useEffect, Fragment } from "react";
 
-import Link from "@/components/link";
-import List from "@/components/list";
+import { Link } from "@/components/link";
+import { List } from "@/components/list";
 import { SheetClose } from "@/components/sheet";
-import useScrollSpy from "@/hooks/scroll-spy";
-import useGetTopOffset from "@/hooks/top-offset";
-import jumpScroll from "@/lib/jump-scroll";
+import { useScrollSpy } from "@/hooks/scroll-spy";
+import { useGetTopOffset } from "@/hooks/top-offset";
+import { jumpScroll } from "@/lib/dom/jump-scroll";
 
 import type { ReactElement } from "react";
 
-import type { TOC } from "@/types/lib/docs";
+import type { TOC as TOCType } from "@/types/docs";
 
 /* ============================================================================================= */
 
-interface TOCProps {
-  toc: TOC[];
+export interface TOCProps {
+  toc: TOCType[];
   isMobile?: boolean;
 }
 
-const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivElement> => {
+export const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivElement> => {
   //
   const Wrapper = isMobile ? SheetClose : Fragment;
 
@@ -84,7 +84,3 @@ const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivElement> 
     </div>
   );
 };
-
-/* ============================================================================================= */
-
-export default TOC;

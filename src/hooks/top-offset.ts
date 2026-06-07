@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  *
  * sticky layouts are: 1. banner 2. header 3. mobile navigation for docs (topics and toc)
  */
-const useGetTopOffset = () => {
+export const useGetTopOffset = () => {
   //
   const [topOffset, setTopOffset] = useState(0);
 
@@ -33,6 +33,7 @@ const useGetTopOffset = () => {
   useEffect(() => {
     // call on first mount
     if (!topOffset) {
+      // oxlint-disable react-hooks-js/set-state-in-effect
       handleResize();
     }
 
@@ -41,11 +42,8 @@ const useGetTopOffset = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+    // oxlint-disable react-hooks/exhaustive-deps
   }, []);
 
   return topOffset;
 };
-
-/* ============================================================================================= */
-
-export default useGetTopOffset;

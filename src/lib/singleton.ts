@@ -1,7 +1,7 @@
 /**
  * single instance for a unique key
  */
-class Singleton {
+export class Singleton {
   //
   private static readonly instances = new Map<string, Singleton>();
 
@@ -50,7 +50,3 @@ class Singleton {
     }
   }
 }
-
-/* ============================================================================================= */
-
-export default Singleton;

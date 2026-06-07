@@ -10,14 +10,14 @@ import {
   MoonFillIcon,
   SunFillIcon,
 } from "@/components/assets/icons";
-import Button from "@/components/button";
-import Client from "@/components/client";
+import { Button } from "@/components/button";
 import {
   DropdownRoot,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
 } from "@/components/dropdown";
+import { Client } from "@/components/misc/client";
 
 import type { UseThemeProps } from "next-themes";
 
@@ -25,7 +25,7 @@ import type { SVGEl } from "@/components/svg";
 
 /* ============================================================================================= */
 
-const ThemeToggle = (): ReturnType<typeof DropdownRoot> => {
+export const ThemeToggle = (): ReturnType<typeof DropdownRoot> => {
   //
   const { theme: activeTheme, setTheme, themes } = useTheme();
 
@@ -62,11 +62,11 @@ const ThemeToggle = (): ReturnType<typeof DropdownRoot> => {
 
 /* ============================================================================================= */
 
-interface IconProps {
+export interface IconProps {
   theme: UseThemeProps["theme"];
 }
 
-const Icon = ({ theme }: IconProps): SVGEl => {
+export const Icon = ({ theme }: IconProps): SVGEl => {
   //
   if (theme === "light") {
     return <SunFillIcon />;
@@ -78,7 +78,3 @@ const Icon = ({ theme }: IconProps): SVGEl => {
 
   return <CircleHalfFillIcon />;
 };
-
-/* ============================================================================================= */
-
-export default ThemeToggle;

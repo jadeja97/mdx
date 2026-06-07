@@ -1,4 +1,4 @@
-import { cls } from "@/lib";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 

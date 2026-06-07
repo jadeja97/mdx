@@ -1,11 +1,13 @@
-import constants from "@/config/constants";
+import { constants } from "@/config/constants";
 import { body, code, display } from "@/config/fonts";
+import { HTMLElements, TSXComponents } from "@/config/mdx-components";
+import { mdxConfig } from "@/config/mdx-config";
 
 import type { DocsConfig } from "@/types";
 
 /* ============================================================================================= */
 
-const defaultConfig: DocsConfig = {
+export const defaultConfig: Partial<DocsConfig> = {
   /**
    * constants used for configuration
    */
@@ -19,8 +21,17 @@ const defaultConfig: DocsConfig = {
     body,
     code,
   },
+
+  /**
+   * mdx processing configurations (`@next/mdx`)
+   */
+  mdxConfig,
+
+  /**
+   * mdx components for `@next/mdx`
+   */
+  mdxComponents: {
+    HTMLElements,
+    TSXComponents,
+  },
 };
-
-/* ============================================================================================= */
-
-export default defaultConfig;

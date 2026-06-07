@@ -1,4 +1,4 @@
-import { cls } from "@/lib";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 
@@ -27,7 +27,3 @@ type FooterProps = {
 export const Footer = ({ children, ...rest }: FooterProps): ReactElement<HTMLElement> => (
   <footer {...rest}>{children}</footer>
 );
-
-/* ============================================================================================= */
-
-export default Footer;

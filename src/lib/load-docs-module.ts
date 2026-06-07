@@ -13,7 +13,10 @@ import type { DocsModule, LoadDocsModuleOptions, LoadDocsModuleOutput } from "@/
  * @param options.content - the content class instance
  * @param options.slugs - segments for the current module
  */
-const loadDocsModule = async ({ content, slugs }: LoadDocsModuleOptions): LoadDocsModuleOutput => {
+export const loadDocsModule = async ({
+  content,
+  slugs,
+}: LoadDocsModuleOptions): LoadDocsModuleOutput => {
   // get current page info
   const { filePath, index, ...fileInfo } = content.getFileInfo(slugs);
 
@@ -55,7 +58,3 @@ const loadDocsModule = async ({ content, slugs }: LoadDocsModuleOptions): LoadDo
     ...docsModule,
   };
 };
-
-/* ============================================================================================= */
-
-export default loadDocsModule;

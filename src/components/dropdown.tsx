@@ -1,7 +1,7 @@
 import { Menu } from "@base-ui/react/menu";
 
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "@/components/assets/icons";
-import { cls } from "@/lib/utils";
+import { cls } from "@/lib/dom/utils";
 
 import type { ComponentProps, ReactElement } from "react";
 
@@ -21,7 +21,7 @@ export const DropdownSub = Menu.SubmenuRoot;
 
 /* ============================================================================================= */
 
-type DropdownTriggerProps = Menu.Trigger.Props;
+export type DropdownTriggerProps = Menu.Trigger.Props;
 
 export const DropdownTrigger = ({
   className,
@@ -32,7 +32,7 @@ export const DropdownTrigger = ({
 
 /* ============================================================================================= */
 
-type DropdownContentProps = Menu.Popup.Props & {
+export type DropdownContentProps = Menu.Popup.Props & {
   portal?: Menu.Portal.Props;
   positioner?: Menu.Positioner.Props;
   align?: Menu.Positioner.Props["align"];
@@ -69,7 +69,7 @@ export const DropdownContent = ({
 
 /* ============================================================================================= */
 
-type DropdownGroupProps = Menu.Group.Props;
+export type DropdownGroupProps = Menu.Group.Props;
 
 export const DropdownGroup = ({
   className,
@@ -80,7 +80,7 @@ export const DropdownGroup = ({
 
 /* ============================================================================================= */
 
-type DropdownItemProps = Menu.Item.Props & { inset?: boolean };
+export type DropdownItemProps = Menu.Item.Props & { inset?: boolean };
 
 export const DropdownItem = ({
   className,
@@ -92,7 +92,7 @@ export const DropdownItem = ({
 
 /* ============================================================================================= */
 
-type DropdownCheckboxItemProps = Menu.CheckboxItem.Props;
+export type DropdownCheckboxItemProps = Menu.CheckboxItem.Props;
 
 export const DropdownCheckboxItem = ({
   children,
@@ -113,7 +113,7 @@ export const DropdownCheckboxItem = ({
 
 /* ============================================================================================= */
 
-type DropdownRadioGroupProps = Menu.RadioGroup.Props;
+export type DropdownRadioGroupProps = Menu.RadioGroup.Props;
 
 export const DropdownRadioGroup = ({
   className,
@@ -124,7 +124,7 @@ export const DropdownRadioGroup = ({
 
 /* ============================================================================================= */
 
-type DropdownRadioItemProps = Menu.RadioItem.Props;
+export type DropdownRadioItemProps = Menu.RadioItem.Props;
 
 export const DropdownRadioItem = ({
   children,
@@ -145,7 +145,7 @@ export const DropdownRadioItem = ({
 
 /* ============================================================================================= */
 
-type DropdownLabelProps = Menu.GroupLabel.Props & { inset?: boolean };
+export type DropdownLabelProps = Menu.GroupLabel.Props & { inset?: boolean };
 
 export const DropdownLabel = ({
   className,
@@ -157,7 +157,7 @@ export const DropdownLabel = ({
 
 /* ============================================================================================= */
 
-type DropdownSeparatorProps = Menu.Separator.Props;
+export type DropdownSeparatorProps = Menu.Separator.Props;
 
 export const DropdownSeparator = ({
   className,
@@ -168,7 +168,7 @@ export const DropdownSeparator = ({
 
 /* ============================================================================================= */
 
-type DropdownShortcutProps = ComponentProps<"kbd">;
+export type DropdownShortcutProps = ComponentProps<"kbd">;
 
 export const DropdownShortcut = ({
   className,
@@ -179,7 +179,7 @@ export const DropdownShortcut = ({
 
 /* ============================================================================================= */
 
-type DropdownSubTriggerProps = Menu.SubmenuTrigger.Props & { inset?: boolean };
+export type DropdownSubTriggerProps = Menu.SubmenuTrigger.Props & { inset?: boolean };
 
 export const DropdownSubTrigger = ({
   children,
@@ -196,7 +196,7 @@ export const DropdownSubTrigger = ({
 
 /* ============================================================================================= */
 
-type DropdownSubContentProps = DropdownContentProps;
+export type DropdownSubContentProps = DropdownContentProps;
 
 export const DropdownSubContent = ({
   className,

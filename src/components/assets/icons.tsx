@@ -1,4 +1,4 @@
-import SVG from "@/components/svg";
+import { SVG } from "@/components/svg";
 
 import type { SVGProps, SVGEl } from "@/components/svg";
 

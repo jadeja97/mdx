@@ -1,13 +1,14 @@
 import { Button as BaseButton } from "@base-ui/react/button";
 
-import { cls, cva } from "@/lib/utils";
+import { cls, cva } from "@/lib/dom/utils";
 
 import type { VariantProps } from "class-variance-authority";
 import type { ReactElement } from "react";
 
 /* ============================================================================================= */
 
-export const variants = cva("btn", {
+// oxlint-disable react/only-export-components
+export const buttonVariants = cva("btn", {
   variants: {
     variant: {
       outline: "btn--outline",
@@ -41,11 +42,11 @@ export const variants = cva("btn", {
 
 /* ============================================================================================= */
 
-type ButtonProps = BaseButton.Props & VariantProps<typeof variants>;
+export type ButtonProps = BaseButton.Props & VariantProps<typeof buttonVariants>;
 
 // NOTE: add `has-icon` class. this will help with `:has`.
 // `:has` not supported yet in Shilp CSS baseline.
-const Button = ({
+export const Button = ({
   className,
   hasIcon = false,
   variant,
@@ -56,13 +57,9 @@ const Button = ({
   <BaseButton
     {...rest}
     nativeButton={!rest.render}
-    className={cls(variants({ variant, size, hasIcon }), className)}
+    className={cls(buttonVariants({ variant, size, hasIcon }), className)}
     // prevent form from submitting on enter key press,
     // by default, it consider any button as submit button
     type={type}
   />
 );
-
-/* ============================================================================================= */
-
-export default Button;
