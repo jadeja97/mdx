@@ -16,11 +16,15 @@ import type { DocsConfig } from "@/types";
 export type AddDataToHTML = (
   pathname: string,
   SITE_URL: DocsConfig["constants"]["SITE_URL"],
+  // using `sanitizePathname` from module creates runtime error (not fatal) in browser console
+  // as imported module is not in scope for `script` tag (`InitialLoad`)
+  // prevent error by passing it as function parameter
+  sanatize: typeof sanitizePathname,
 ) => void;
 
-const addDataAttrToHTML: AddDataToHTML = (pathname, SITE_URL) => {
+const addDataAttrToHTML: AddDataToHTML = (pathname, SITE_URL, sanitize) => {
   //
-  const path = sanitizePathname(pathname, SITE_URL);
+  const path = sanitize(pathname, SITE_URL);
   const [_emptyString, root] = path.split("/");
 
   const html = document.documentElement;
@@ -50,7 +54,7 @@ export const Routing = ({ SITE_URL }: RoutingProps) => {
 
   useLayoutEffect(() => {
     //
-    addDataAttrToHTML(pathname, SITE_URL);
+    addDataAttrToHTML(pathname, SITE_URL, sanitizePathname);
     //
   }, [pathname, SITE_URL]);
 
@@ -75,7 +79,7 @@ export const InitialLoad = ({ SITE_URL }: InitialLoadProps): ReactElement<HTMLSc
       __html: `
 				(function(pathname, addDataAttrToHTML) {
 					//
-					addDataAttrToHTML(pathname, ${SITE_URL});
+					addDataAttrToHTML(pathname, "${SITE_URL}", ${sanitizePathname});
 					//
 				})(location.pathname, ${addDataAttrToHTML})
 			`,

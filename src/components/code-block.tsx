@@ -22,8 +22,14 @@ export type CodeBlockProps = CodeBlockWithLangProps | CodeBlockWithoutLangProps;
 export const CodeBlock = (props: CodeBlockProps): ReactElement<HTMLElement | HTMLDivElement> => (
   // @ts-expect-error  suppress the error
   <CodeBlockRoot {...props}>
-    <CodeBlockHead title={props.title} content={props.children} />
-    <CodeBlockBody>{props.children}</CodeBlockBody>
+    {props.lang ? (
+      <>
+        <CodeBlockHead title={props.title} content={props.children} />
+        <CodeBlockBody>{props.children}</CodeBlockBody>
+      </>
+    ) : (
+      props.children
+    )}
   </CodeBlockRoot>
 );
 
