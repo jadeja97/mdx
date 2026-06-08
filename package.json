@@ -34,6 +34,11 @@
       "import": "./dist/markdown/*.js",
       "default": "./dist/markdown/*.js"
     },
+    "./scripts/*": {
+      "types": "./dist/scripts/*.d.ts",
+      "import": "./dist/scripts/*.js",
+      "default": "./dist/scripts/*.js"
+    },
     "./types": {
       "types": "./dist/types/index.d.ts"
     }

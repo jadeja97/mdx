@@ -71,6 +71,7 @@ const viteConfig = defineConfig({
         ...createInputEntry("src/main.ts"),
         ...createInputEntry("src/types/index.ts"),
         ...createInputEntry("src/config/index.ts"),
+        ...createInputEntry("src/scripts/**/*.ts"),
       },
       output: {
         preserveModules: true,
