@@ -5,14 +5,15 @@ import { cwd } from "node:process";
 import MiniSearch from "minisearch";
 
 import { Singleton } from "@/lib/singleton";
-import { getConfig } from "@/main";
+
+import type { DocsConfig } from "@/types";
 
 /* ============================================================================================= */
 
-const { SEARCH_INDEX_FIELDS, SEARCH_INDEX_PATH, SEARCH_INDEX_RETURN_FIELDS } =
-  getConfig().constants;
-
-/* ============================================================================================= */
+export type CreateSearchInstanceOptions = Pick<
+  DocsConfig["constants"],
+  "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS" | "SEARCH_INDEX_PATH"
+>;
 
 /**
  * builds and manages the static search index for documentation content
@@ -24,18 +25,23 @@ const { SEARCH_INDEX_FIELDS, SEARCH_INDEX_PATH, SEARCH_INDEX_RETURN_FIELDS } =
 export class Search {
   //
   private miniSearchInstance!: MiniSearch;
+  private searchOptions!: CreateSearchInstanceOptions;
 
-  public static create(path: string) {
-    return new this().init(`search:${path}`);
+  public static create(path: string, searchOptions: CreateSearchInstanceOptions) {
+    return new this().init(`search:${path}`, searchOptions);
   }
 
-  private init(path: string) {
+  private init(path: string, searchOptions: CreateSearchInstanceOptions) {
     //
     const instance = Singleton.get<Search & Singleton>(path);
 
     const registerMethods = instance.registerMethods.bind(instance, this);
 
     registerMethods(["createSearchInstance", "ingest"]);
+
+    if (!instance.searchOptions) {
+      instance.searchOptions = searchOptions;
+    }
 
     if (!instance.miniSearchInstance) {
       instance.miniSearchInstance = instance.createSearchInstance();
@@ -50,8 +56,8 @@ export class Search {
 
   private createSearchInstance() {
     return new MiniSearch({
-      fields: SEARCH_INDEX_FIELDS,
-      storeFields: SEARCH_INDEX_RETURN_FIELDS,
+      fields: this.searchOptions.SEARCH_INDEX_FIELDS,
+      storeFields: this.searchOptions.SEARCH_INDEX_RETURN_FIELDS,
     });
   }
 
@@ -59,7 +65,7 @@ export class Search {
     //
     this.miniSearchInstance.addAll(documents);
 
-    const searchIndexPath = join(cwd(), `public${SEARCH_INDEX_PATH}`);
+    const searchIndexPath = join(cwd(), `public${this.searchOptions.SEARCH_INDEX_PATH}`);
     const serachContent = {
       index: this.miniSearchInstance.toJSON(),
       documents,

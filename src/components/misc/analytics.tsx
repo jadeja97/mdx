@@ -1,32 +1,38 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics as GA } from "@next/third-parties/google";
 import Script from "next/script";
-
-import { getConfig } from "@/main";
 
 import type { ReactElement } from "react";
 
 /* ============================================================================================= */
 
-const config = getConfig();
+export interface GoogleAnalyticsProps {
+  PROD: boolean;
+  id?: string;
+}
 
-const { PROD } = config.constants;
-
-/* ============================================================================================= */
-
-export const GA4 = (): null | ReactElement => {
+export const GoogleAnalytics = ({ PROD, id }: GoogleAnalyticsProps): null | ReactElement => {
   //
-  if (!(PROD && config.analytics?.google)) {
+  if (!(PROD && id)) {
     return null;
   }
 
-  return <GoogleAnalytics gaId={config.analytics.google} />;
+  return <GA gaId={id} />;
 };
 
 /* ============================================================================================= */
 
-export const MSClarity = (): null | ReactElement<HTMLScriptElement> => {
+export interface MicrosoftClarityProps {
+  PROD: boolean;
+  id?: string;
+}
+
+export const MicrosoftClarity = ({
+  PROD,
+  id,
+}: MicrosoftClarityProps): null | ReactElement<HTMLScriptElement> => {
   //
-  if (!(PROD && config.analytics?.msClarity)) {
+
+  if (!(PROD && id)) {
     return null;
   }
 
@@ -39,7 +45,7 @@ export const MSClarity = (): null | ReactElement<HTMLScriptElement> => {
           t.src="https://www.clarity.ms/tag/"+i;
           y = l.getElementsByTagName(r)[0];
           y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", ${config.analytics.msClarity});
+        })(window, document, "clarity", "script", ${id});
       `}
     </Script>
   );

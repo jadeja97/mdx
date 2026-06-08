@@ -1,6 +1,8 @@
 import { constants } from "@/config/constants";
 import { HTMLElements, TSXComponents } from "@/config/mdx-components";
 import { mdxConfig } from "@/config/mdx-config";
+import { getNextConfig } from "@/config/next-config";
+import { getWebpackConfig } from "@/config/webpack-config";
 
 import type { DocsConfig } from "@/types";
 
@@ -24,4 +26,14 @@ export const defaultConfig: Partial<DocsConfig> = {
     HTMLElements,
     TSXComponents,
   },
+
+  /**
+   * next configurations (`next.config.ts`)
+   */
+  getNextConfig,
+
+  /**
+   * webpack configurations (`next.config.ts`)
+   */
+  getWebpackConfig,
 };

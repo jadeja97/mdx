@@ -6,19 +6,19 @@ import { usePathname } from "next/navigation";
 import { useLayoutEffect } from "react";
 
 import { sanitizePathname } from "@/lib/dom/utils";
-import { getConfig } from "@/main";
 
 import type { ReactElement } from "react";
 
-/* ============================================================================================= */
-
-const config = getConfig();
-
-const { SITE_URL } = config.constants;
+import type { DocsConfig } from "@/types";
 
 /* ============================================================================================= */
 
-const addDataAttrToHTML = (pathname: string) => {
+export type AddDataToHTML = (
+  pathname: string,
+  SITE_URL: DocsConfig["constants"]["SITE_URL"],
+) => void;
+
+const addDataAttrToHTML: AddDataToHTML = (pathname, SITE_URL) => {
   //
   const path = sanitizePathname(pathname, SITE_URL);
   const [_emptyString, root] = path.split("/");
@@ -36,28 +36,38 @@ const addDataAttrToHTML = (pathname: string) => {
 
 /* ============================================================================================= */
 
+export type RoutingProps = Pick<DocsConfig["constants"], "SITE_URL">;
+
 /**
  * adds `data-path` and `data-root` attr to html on initial load (before dom paint)
+ *
+ * @param options - options for routing
+ * @param options.SITE_URL - site url or domain
  */
-export const Routing = () => {
+export const Routing = ({ SITE_URL }: RoutingProps) => {
   //
   const pathname = usePathname();
 
   useLayoutEffect(() => {
     //
-    addDataAttrToHTML(pathname);
+    addDataAttrToHTML(pathname, SITE_URL);
     //
-  }, [pathname]);
+  }, [pathname, SITE_URL]);
 
   return null;
 };
 
 /* ============================================================================================= */
 
+export type InitialLoadProps = Pick<DocsConfig["constants"], "SITE_URL">;
+
 /**
  * adds `data-path` and `data-root` attr to html on client navigation (before dom paint)
+ *
+ * @param options - options for routing
+ * @param options.SITE_URL - site url or domain
  */
-export const InitialLoad = (): ReactElement<HTMLScriptElement> => (
+export const InitialLoad = ({ SITE_URL }: InitialLoadProps): ReactElement<HTMLScriptElement> => (
   <script
     suppressHydrationWarning
     // oxlint-disable react/no-danger
@@ -65,7 +75,7 @@ export const InitialLoad = (): ReactElement<HTMLScriptElement> => (
       __html: `
 				(function(pathname, addDataAttrToHTML) {
 					//
-					addDataAttrToHTML(pathname);
+					addDataAttrToHTML(pathname, ${SITE_URL});
 					//
 				})(location.pathname, ${addDataAttrToHTML})
 			`,

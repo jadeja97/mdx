@@ -21,7 +21,7 @@ import { cls } from "@/lib/dom/utils";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 import type { DialogCloseProps } from "@/components/dialog";
-import type { SearchQueryResult } from "@/hooks/use-search";
+import type { SearchQueryResult, UseSearchOptions } from "@/hooks/use-search";
 
 /* ============================================================================================= */
 
@@ -54,15 +54,25 @@ export interface SearchRootChildParams {
 
 export type SearchRootProps = {
   children: ReactNode;
-} & ComponentProps<"div">;
+} & UseSearchOptions &
+  ComponentProps<"div">;
 
 export const SearchRoot = ({
   children,
   className,
+  DEV,
+  SEARCH_INDEX_FIELDS,
+  SEARCH_INDEX_PATH,
+  SEARCH_INDEX_RETURN_FIELDS,
   ...rest
 }: SearchRootProps): ReactElement<HTMLDivElement> => {
   //
-  const { initialize, ready, error, query } = useSearch();
+  const { initialize, ready, error, query } = useSearch({
+    DEV,
+    SEARCH_INDEX_FIELDS,
+    SEARCH_INDEX_PATH,
+    SEARCH_INDEX_RETURN_FIELDS,
+  });
 
   const [search, setSearch] = useState("");
   const [result, setResult] = useState<SearchQueryResult>();
@@ -103,8 +113,10 @@ export const SearchRoot = ({
 
 /* ============================================================================================= */
 
-export const Search = (): ReturnType<typeof SearchRoot> => (
-  <SearchRoot>
+export type SearchProps = UseSearchOptions;
+
+export const Search = (props: SearchProps): ReturnType<typeof SearchRoot> => (
+  <SearchRoot {...props}>
     <SearchCloseButton>
       <XIcon />
     </SearchCloseButton>

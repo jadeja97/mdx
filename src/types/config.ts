@@ -1,5 +1,7 @@
 import type { NextMDXOptions } from "@next/mdx";
 import type { MDXComponents } from "mdx/types";
+import type { NextConfig } from "next";
+import type { Configuration } from "webpack";
 
 import type { SVGEl, SVGProps } from "@/components/svg";
 
@@ -20,12 +22,12 @@ export interface Analytics {
   /**
    * google analytics key
    */
-  google?: string;
+  googleAnalytics?: string;
 
   /**
    * microsoft clarity key
    */
-  msClarity?: string;
+  microsoftClarity?: string;
 }
 
 export type NavLinks = Record<
@@ -69,6 +71,29 @@ export interface DocsConfig {
     HTMLElements?: MDXComponents;
     TSXComponents?: MDXComponents;
   };
+  getNextConfig: (options: { githubPages?: boolean }) => NextConfig;
+
+  getWebpackConfig: (
+    config: Configuration,
+    options: {
+      plugins: Configuration["plugins"];
+      alias:
+        | {
+            /**
+             * new request.
+             */
+            alias: string | false | string[];
+            /**
+             * request to be redirected.
+             */
+            name: string;
+            /**
+             * redirect only exact matching request.
+             */
+          }[]
+        | Record<string, string | false | string[]>;
+    },
+  ) => Configuration;
 }
 
 export interface UserConfig {

@@ -44,8 +44,7 @@ export const remarkTOC = () => (tree: Root) => {
 
   // export toc from `.mdx` files
   tree.children.push({
-    // oxlint-disable typescript/ban-ts-comment
-    // @ts-expect-error
+    // @ts-expect-error  type issue
     type: "mdxjsEsm",
     // NOTE: with `value` only, `toc` is not exported. throwing error.
     value: `export const toc = ${safeStr};`,

@@ -2,14 +2,9 @@ import { sleep } from "@jadeja/ts/lib";
 import MiniSearch from "minisearch";
 import { useRef, useEffect, useState } from "react";
 
-import { getConfig } from "@/main";
-
 import type { AsPlainObject, SearchResult } from "minisearch";
 
-/* ============================================================================================= */
-
-const { SEARCH_INDEX_PATH, DEV, SEARCH_INDEX_FIELDS, SEARCH_INDEX_RETURN_FIELDS } =
-  getConfig().constants;
+import type { DocsConfig } from "@/types";
 
 /* ============================================================================================= */
 
@@ -24,10 +19,26 @@ export interface SearchQueryResult {
   data: SearchResult[];
 }
 
+export type UseSearchOptions = Pick<
+  DocsConfig["constants"],
+  "DEV" | "SEARCH_INDEX_PATH" | "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS"
+>;
+
 /**
  * load the search index and a method to query
+ *
+ * @param options - options for search hook
+ * @param options.DEV - is current environment is "development"
+ * @param options.SEARCH_INDEX_FIELDS - fields for search indexing
+ * @param options.SEARCH_INDEX_PATH - file path of indexed search data
+ * @param options.SEARCH_INDEX_RETURN_FIELDS - result fields from search index data
  */
-export const useSearch = () => {
+export const useSearch = ({
+  DEV,
+  SEARCH_INDEX_FIELDS,
+  SEARCH_INDEX_PATH,
+  SEARCH_INDEX_RETURN_FIELDS,
+}: UseSearchOptions) => {
   //
   const instance = useRef<MiniSearch>(null);
   const abortController = useRef<AbortController>(null);

@@ -10,6 +10,7 @@ import frontMatter from "front-matter";
 import { Search } from "@/lib/search";
 import { Singleton } from "@/lib/singleton";
 
+import type { CreateSearchInstanceOptions } from "@/lib/search";
 import type {
   AddMetaOptions,
   CreateFileMetaOptions,
@@ -49,11 +50,11 @@ export class Content {
   private tree!: Tree;
   private search!: Search & Singleton;
 
-  public static create(path: string, dir: string) {
-    return new this().init(path, dir);
+  public static create(path: string, dir: string, searchOptions: CreateSearchInstanceOptions) {
+    return new this().init(path, dir, searchOptions);
   }
 
-  private init(path: string, dir: string) {
+  private init(path: string, dir: string, searchOptions: CreateSearchInstanceOptions) {
     //
     const paths = this.getPaths(path, dir);
 
@@ -97,7 +98,7 @@ export class Content {
 
     // create search index
     if (!instance.search) {
-      instance.search = Search.create(paths.ROOT);
+      instance.search = Search.create(paths.ROOT, searchOptions);
       instance.buildSearchIndex();
     }
 
