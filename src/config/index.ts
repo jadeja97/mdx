@@ -4,7 +4,7 @@ import { mdxConfig } from "@/config/mdx-config";
 import { getNextConfig } from "@/config/next-config";
 import { getWebpackConfig } from "@/config/webpack-config";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 
@@ -26,6 +26,11 @@ export const defaultConfig: Partial<DocsConfig> = {
     HTMLElements,
     TSXComponents,
   },
+
+  /**
+   * trailing slash for server similar to github pages
+   */
+  trailingSlash: false,
 
   /**
    * next configurations (`next.config.ts`)

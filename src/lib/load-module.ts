@@ -2,21 +2,18 @@ import { throwError } from "@jadeja/ts/lib";
 
 import type { FC } from "react";
 
-import type { DocsModule, LoadDocsModuleOptions, LoadDocsModuleOutput } from "@/types/docs";
+import type { Module, LoadModuleOptions, LoadModuleOutput } from "@/types/module";
 
 /* ============================================================================================= */
 
 /**
  * load `mdx` file as module with additional information
  *
- * @param options - Options for the loading docs module
+ * @param options - Options for the loading module
  * @param options.content - the content class instance
  * @param options.slugs - segments for the current module
  */
-export const loadDocsModule = async ({
-  content,
-  slugs,
-}: LoadDocsModuleOptions): LoadDocsModuleOutput => {
+export const loadModule = async ({ content, slugs }: LoadModuleOptions): LoadModuleOutput => {
   // get current page info
   const { filePath, index, ...fileInfo } = content.getFileInfo(slugs);
 
@@ -27,22 +24,22 @@ export const loadDocsModule = async ({
   // get previous and next page info
   const neighbours = content.getNeighbours(index);
 
-  let docsModule: DocsModule;
+  let mdxModule: Module;
 
   try {
     // dynamically import `.mdx` file as module
     // oxlint-disable typescript/no-unsafe-assignment
-    const dynamicModule: Omit<DocsModule, "MDXComponent"> & {
+    const dynamicModule: Omit<Module, "MDXComponent"> & {
       default: FC;
-    } = await import(`@/content/docs/${filePath}`);
+    } = await import(`@/content/${content.paths.dir}/${filePath}`);
 
     if (!dynamicModule?.default) {
-      throw new Error(`Module not found :: "@/content/docs/${filePath}"`);
+      throw new Error(`Module not found :: "@/content/${content.paths.dir}/${filePath}"`);
     }
 
     const { default: MDXComponent, ...rest } = dynamicModule;
 
-    docsModule = {
+    mdxModule = {
       MDXComponent,
       ...rest,
     };
@@ -55,6 +52,6 @@ export const loadDocsModule = async ({
     index,
     neighbours,
     ...fileInfo,
-    ...docsModule,
+    ...mdxModule,
   };
 };

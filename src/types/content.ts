@@ -1,12 +1,56 @@
+import type { CreateSearchInstanceOptions } from "@/lib/search";
+import type { DocsConfig } from "@/types/config";
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+  CONTENT
+================================================================================================ */
+
+export type ContentOptions = Pick<DocsConfig, "trailingSlash"> & {
+  search: CreateSearchInstanceOptions;
+};
+
 /* ================================================================================================
   PATHS
 ================================================================================================ */
 
 export interface Paths {
-  path: string;
-  dir: string;
+  /**
+   * relative path from project root (_no leading slash_): {root}
+   *
+   * ⚠️ **THIS IS FIXED.**
+   *
+   * @default "src/content"
+   */
   root: string;
-  ROOT: string;
+
+  /**
+   * content directory: {dir}
+   *
+   * example: "docs", "blogs"
+   */
+  dir: string;
+
+  /**
+   * relative path from project root: {root}/{dir}
+   *
+   * example: "src/content/docs", "src/content/blogs"
+   */
+  path: string;
+
+  /**
+   * absolute path
+   *
+   * - unix: {pathFromDrive}/{project}/{root}/{dir}
+   * - windows: {pathFromRoot}/{project}/{root}/{dir}
+   *
+   * example
+   *
+   * - windows: "D:\dev\projects\jadeja-docs\src\content\docs"
+   * - unix: "/home/dev/projects/jadeja-docs/src/content/docs"
+   */
+  PATH: string;
 }
 
 /* ================================================================================================
@@ -34,7 +78,7 @@ export type List = Map<number, FullMeta>;
 export type Tree = (FileMeta | FolderMeta)[];
 
 export interface CreateTreeOptions {
-  dir?: string;
+  PATH?: Paths["PATH"];
   parentSlugs?: string[];
   reservedIndex?: number;
 }
@@ -61,12 +105,18 @@ export type FullMeta = (FileMeta | FolderMeta) & {
 };
 
 export interface AddMetaOptions {
-  dir: string;
+  PATH: Paths["PATH"];
   slugs: string[];
   file: string;
   meta: FileMeta | FolderMeta;
   reservedIndex?: number;
 }
+
+export type Metadata = {
+  title: string;
+  description: string;
+  keywords: string;
+} & Record<string, string>;
 
 /* ================================================================================================
   FILE
@@ -98,7 +148,7 @@ export interface FileMeta {
 }
 
 export interface CreateFileMetaOptions {
-  dir: string;
+  PATH: Paths["PATH"];
   parentSlugs: string[];
   file: File;
   reservedIndex?: number;
@@ -132,17 +182,13 @@ export interface FolderMeta {
    */
   title?: string;
   /**
-   * link
-   */
-  url: string;
-  /**
    * childs
    */
   childs: Tree;
 }
 
 export interface CreateFolderMetaOptions {
-  dir: string;
+  PATH: Paths["PATH"];
   parentSlugs: string[];
   folder: Folder;
 }
@@ -154,4 +200,14 @@ export interface CreateFolderMetaOptions {
 export interface Neighbours {
   prev?: FullMeta | null;
   next?: FullMeta | null;
+}
+
+/* ================================================================================================
+  TOC
+================================================================================================ */
+
+export interface TOC {
+  level: number;
+  text: string;
+  id: string;
 }

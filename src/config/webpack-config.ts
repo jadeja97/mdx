@@ -1,6 +1,6 @@
 import type { ResolveOptions } from "webpack";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 

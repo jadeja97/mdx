@@ -4,7 +4,7 @@ import { visit } from "unist-util-visit";
 
 import type { Root } from "mdast";
 
-import type { TOC } from "@/types/docs";
+import type { TOC } from "@/types/content";
 
 /* ============================================================================================= */
 

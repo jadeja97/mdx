@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 
 import type { AsPlainObject, SearchResult } from "minisearch";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 
@@ -21,7 +21,7 @@ export interface SearchQueryResult {
 
 export type UseSearchOptions = Pick<
   DocsConfig["constants"],
-  "DEV" | "SEARCH_INDEX_PATH" | "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS"
+  "DEV" | "SEARCH_INDEX_FILE_NAME" | "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS"
 >;
 
 /**
@@ -30,13 +30,13 @@ export type UseSearchOptions = Pick<
  * @param options - options for search hook
  * @param options.DEV - is current environment is "development"
  * @param options.SEARCH_INDEX_FIELDS - fields for search indexing
- * @param options.SEARCH_INDEX_PATH - file path of indexed search data
+ * @param options.SEARCH_INDEX_FILE_NAME - file path of indexed search data
  * @param options.SEARCH_INDEX_RETURN_FIELDS - result fields from search index data
  */
 export const useSearch = ({
   DEV,
   SEARCH_INDEX_FIELDS,
-  SEARCH_INDEX_PATH,
+  SEARCH_INDEX_FILE_NAME,
   SEARCH_INDEX_RETURN_FIELDS,
 }: UseSearchOptions) => {
   //
@@ -68,7 +68,7 @@ export const useSearch = ({
       //
       abortController.current = new AbortController();
 
-      const res = await fetch(SEARCH_INDEX_PATH, {
+      const res = await fetch(`/${SEARCH_INDEX_FILE_NAME}`, {
         signal: abortController.current.signal,
         cache: DEV ? "no-store" : "force-cache",
       });

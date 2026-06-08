@@ -27,6 +27,7 @@ export const Headings = ({
     }
 
     // new page navigation must start from top (scroll position `0`)
+    // pathname contains the trailing slash (if exists)
     router.push(`${pathname}#${rest.id}`, { scroll: true });
   };
 

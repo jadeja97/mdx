@@ -62,7 +62,7 @@ export const SearchRoot = ({
   className,
   DEV,
   SEARCH_INDEX_FIELDS,
-  SEARCH_INDEX_PATH,
+  SEARCH_INDEX_FILE_NAME,
   SEARCH_INDEX_RETURN_FIELDS,
   ...rest
 }: SearchRootProps): ReactElement<HTMLDivElement> => {
@@ -70,7 +70,7 @@ export const SearchRoot = ({
   const { initialize, ready, error, query } = useSearch({
     DEV,
     SEARCH_INDEX_FIELDS,
-    SEARCH_INDEX_PATH,
+    SEARCH_INDEX_FILE_NAME,
     SEARCH_INDEX_RETURN_FIELDS,
   });
 

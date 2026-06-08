@@ -28,13 +28,13 @@ export interface Constants {
   SEARCH_INDEX_KEY: string;
 
   /**
-   * a full path of search index file. this will be stored in public folder.
+   * search index file name. this will be stored in public folder.
    *
-   * dev: `/${SEARCH_INDEX_KEY}-v-dev.json`
+   * dev: `${SEARCH_INDEX_KEY}-v-dev.json`
    *
-   * prod: `/${SEARCH_INDEX_KEY}-v-${VERSION}.json`
+   * prod: `${SEARCH_INDEX_KEY}-v-${VERSION}.json`
    */
-  SEARCH_INDEX_PATH: `/${string}-v-${`${number}.${number}.${number}${`-${string}.${number}` | ""}` | ("dev" | number)}.json`;
+  SEARCH_INDEX_FILE_NAME: `${string}-v-${`${number}.${number}.${number}${`-${string}.${number}` | ""}` | ("dev" | number)}.json`;
 
   /**
    * `true` if environment is "development"
@@ -110,6 +110,8 @@ export interface DocsConfig {
     HTMLElements?: MDXComponents;
     TSXComponents?: MDXComponents;
   };
+  trailingSlash?: boolean;
+
   getNextConfig: (options: { githubPages?: boolean }) => NextConfig;
 
   getWebpackConfig: (
@@ -138,17 +140,8 @@ export interface DocsConfig {
 export type RequiredConstants = Pick<Constants, "DEV" | "PROD" | "SITE_URL" | "VERSION">;
 export type OptionalConstants = Partial<Omit<Constants, keyof RequiredConstants>>;
 
-export interface UserConfig {
+export type UserConfig = Omit<DocsConfig, "getNextConfig" | "getWebpackConfig"> & {
   analytics?: Partial<Analytics>;
   constants: RequiredConstants & OptionalConstants;
-  links: {
-    navigations: NavLinks;
-    socials: SocialLinks;
-    authors: AuthorLinks;
-  };
   mdxConfig?: NextMDXOptions;
-  mdxComponents?: {
-    HTMLElements?: MDXComponents;
-    TSXComponents?: MDXComponents;
-  };
-}
+};

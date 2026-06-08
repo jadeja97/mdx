@@ -9,7 +9,7 @@ import { sanitizePathname } from "@/lib/dom/utils";
 
 import type { ReactElement } from "react";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 

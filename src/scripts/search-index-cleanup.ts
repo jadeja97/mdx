@@ -4,7 +4,7 @@ import { cwd } from "node:process";
 
 import { log } from "@jadeja/ts/lib";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 

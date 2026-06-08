@@ -1,4 +1,4 @@
-import type { Constants } from "@/types";
+import type { Constants } from "@/types/config";
 
 /* ============================================================================================= */
 
@@ -26,14 +26,14 @@ export const constants: Constants = {
   SEARCH_INDEX_KEY: "search-index",
 
   /**
-   * a full path of search index file. this will be stored in public folder.
+   * search index file name. this will be stored in public folder.
    *
-   * dev: `/${SEARCH_INDEX_KEY}-v-dev.json`
+   * dev: `${SEARCH_INDEX_KEY}-v-dev.json`
    *
-   * prod: `/${SEARCH_INDEX_KEY}-v-${VERSION}.json`
+   * prod: `${SEARCH_INDEX_KEY}-v-${VERSION}.json`
    */
   // oxlint-disable node/no-process-env
-  SEARCH_INDEX_PATH: `/search-index-v-${process.env.NODE_ENV === "development" ? "dev" : "0.0.0"}.json`,
+  SEARCH_INDEX_FILE_NAME: `search-index-v-${process.env.NODE_ENV === "development" ? "dev" : "0.0.0"}.json`,
 
   /**
    * `true` if environment is "development"

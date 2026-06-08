@@ -27,7 +27,7 @@ export const jumpScroll = ({ container, element }: JumpScroll) => {
     container.scrollTop += offsetTop;
   }
 
-  // the below method is not used.
+  /* the below method is not useful. */
   // when `scrollIntoView` starts, it would pause the main document scroll.
 
   // const isAbove = elMeta.top < containerMeta.top;

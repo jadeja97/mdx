@@ -6,13 +6,13 @@ import MiniSearch from "minisearch";
 
 import { Singleton } from "@/lib/singleton";
 
-import type { DocsConfig } from "@/types";
+import type { DocsConfig } from "@/types/config";
 
 /* ============================================================================================= */
 
 export type CreateSearchInstanceOptions = Pick<
   DocsConfig["constants"],
-  "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS" | "SEARCH_INDEX_PATH"
+  "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS" | "SEARCH_INDEX_FILE_NAME"
 >;
 
 /**
@@ -20,7 +20,7 @@ export type CreateSearchInstanceOptions = Pick<
  *
  * exposes:
  *
- * - `instance.ingest`
+ * - `instance.ingestAll`
  */
 export class Search {
   //
@@ -28,7 +28,8 @@ export class Search {
   private searchOptions!: CreateSearchInstanceOptions;
 
   public static create(path: string, searchOptions: CreateSearchInstanceOptions) {
-    return new this().init(`search:${path}`, searchOptions);
+    // LSS: Local Static Search
+    return new this().init(`LSS:${path}`, searchOptions);
   }
 
   private init(path: string, searchOptions: CreateSearchInstanceOptions) {
@@ -61,11 +62,11 @@ export class Search {
     });
   }
 
-  public ingest<T>(documents: T[]) {
+  public ingestAll<T>(documents: T[]) {
     //
     this.miniSearchInstance.addAll(documents);
 
-    const searchIndexPath = join(cwd(), `public${this.searchOptions.SEARCH_INDEX_PATH}`);
+    const searchIndexPath = join(cwd(), "public", this.searchOptions.SEARCH_INDEX_FILE_NAME);
     const serachContent = {
       index: this.miniSearchInstance.toJSON(),
       documents,

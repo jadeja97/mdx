@@ -10,9 +10,9 @@ import frontMatter from "front-matter";
 import { Search } from "@/lib/search";
 import { Singleton } from "@/lib/singleton";
 
-import type { CreateSearchInstanceOptions } from "@/lib/search";
 import type {
   AddMetaOptions,
+  ContentOptions,
   CreateFileMetaOptions,
   CreateFolderMetaOptions,
   CreateTreeOptions,
@@ -23,17 +23,21 @@ import type {
   FullMeta,
   List,
   Meta,
+  Metadata,
   Neighbours,
   Paths,
   Slugs,
   Tree,
 } from "@/types/content";
-import type { Metadata } from "@/types/docs";
 
 /* ============================================================================================= */
 
 /**
- * builds the documentation tree from the content directory.
+ * builds the content tree from the `/src/content` directory.
+ *
+ * exposed properties:
+ *
+ * - `instance.paths`
  *
  * exposed methods:
  *
@@ -44,23 +48,28 @@ import type { Metadata } from "@/types/docs";
  */
 export class Content {
   //
-  private paths!: Paths;
+  public paths!: Paths;
   private slugs!: Slugs;
   private list!: List;
   private tree!: Tree;
   private search!: Search & Singleton;
+  private options!: ContentOptions;
 
-  public static create(path: string, dir: string, searchOptions: CreateSearchInstanceOptions) {
-    return new this().init(path, dir, searchOptions);
+  public static create(dir: string, options: ContentOptions) {
+    return new this().init(dir, options);
   }
 
-  private init(path: string, dir: string, searchOptions: CreateSearchInstanceOptions) {
+  private init(dir: string, options: ContentOptions) {
     //
-    const paths = this.getPaths(path, dir);
+    const paths = this.getPaths(dir);
 
-    const instance = Singleton.get<Content & Singleton>(paths.ROOT);
+    const instance = Singleton.get<Content & Singleton>(paths.path);
 
     const registerMethods = instance.registerMethods.bind(instance, this);
+
+    if (!instance.options) {
+      instance.options = options;
+    }
 
     if (!instance.paths) {
       instance.paths = paths;
@@ -98,26 +107,26 @@ export class Content {
 
     // create search index
     if (!instance.search) {
-      instance.search = Search.create(paths.ROOT, searchOptions);
+      instance.search = Search.create(paths.path, options.search);
       instance.buildSearchIndex();
     }
 
     return instance;
   }
 
-  private getPaths(path: string, dir: string): Paths {
-    // path from project root: {path}{dir}
-    const root = join(path, dir);
+  private getPaths(dir: string): Paths {
+    // path from project root: {contentRoot}{dir}
+    const root = join("src", "content", dir);
 
     return {
-      // relative path from project root: src/content
-      path,
-      // working directory: docs
+      // relative path from project root: {contentRoot}
+      root: "src/content",
+      // content directory: {dir}
       dir,
-      // relative path from project root: src/content/docs
-      root,
-      // absolute path: {pathFromDrive}/shilpcss/apps/docs/src/content/docs
-      ROOT: join(cwd(), root),
+      // relative path from project root: {root}/{dir}
+      path: root,
+      // absolute path: {pathFromDrive|pathFromRoot}/{project}/{root}/{dir}
+      PATH: join(cwd(), root),
     };
   }
 
@@ -125,24 +134,20 @@ export class Content {
 		READ FILE
 	========================= */
 
-  private readFile(file: string) {
+  private readFile(filePATH: Paths["PATH"]) {
     //
-    const isFileExist = existsSync(file);
+    const isFileExist = existsSync(filePATH);
 
     if (!isFileExist) {
-      return null;
+      return throwError(`File not found!!! :: ${filePATH}`);
     }
 
-    return readFileSync(file, "utf8");
+    return readFileSync(filePATH, "utf8");
   }
 
-  private readMeta(dir: string): Meta {
+  private readMeta(PATH: Paths["PATH"]): Meta {
     //
-    const file = this.readFile(join(dir, "meta.json"));
-
-    if (!file) {
-      return {} as Meta;
-    }
+    const file = this.readFile(join(PATH, "meta.json"));
 
     return JSON.parse(file) as Meta;
   }
@@ -153,7 +158,7 @@ export class Content {
 
   // create navigation url from slugs
   private getNavigationURL(slugs: string[]) {
-    return [`/${this.paths.dir}`, ...slugs].join("/");
+    return [`/${this.paths.dir}`, ...slugs].join("/") + (this.options.trailingSlash ? "/" : "");
   }
 
   // get path for dynamic import
@@ -167,13 +172,18 @@ export class Content {
 		NAVIGATION TREE
 	========================= */
 
+  // primarily used for `reservedIndex`
+  private getLength() {
+    return this.list.size;
+  }
+
   private createTree({
-    dir = this.paths.ROOT,
+    PATH = this.paths.PATH,
     parentSlugs = [],
     reservedIndex = -1,
   }: CreateTreeOptions): Tree {
     //
-    const meta = this.readMeta(dir);
+    const meta = this.readMeta(PATH);
 
     if (!meta.items) {
       return [];
@@ -185,17 +195,17 @@ export class Content {
 
     // get files meta only, queue the folders
     const files: (FileMeta | null)[] = meta.items.map((item) => {
-      // remove hidden files
+      // remove hidden files and folders
       if (item.hidden) {
         return null;
       }
 
       // file meta
       if (!item.type || item.type === "file") {
-        return this.createFileMeta({ dir, parentSlugs, file: item, reservedIndex });
+        return this.createFileMeta({ PATH, parentSlugs, file: item, reservedIndex });
       }
 
-      // queue folder - processed last
+      // queue folders - processed last
       // this creates issue: https://github.com/JadejaHQ/shilpcss/issues/32
       if (item.type === "folder") {
         folderQueue.push(item);
@@ -206,13 +216,14 @@ export class Content {
 
     // get folders meta
     const folders = folderQueue.map((folder) =>
-      this.createFolderMeta({ dir, parentSlugs, folder }),
+      // hidden folders handled at files processing (above block)
+      this.createFolderMeta({ PATH, parentSlugs, folder }),
     );
 
     return [...files.filter((x) => x !== null), ...folders];
   }
 
-  private createFileMeta({ dir, parentSlugs, file, reservedIndex = -1 }: CreateFileMetaOptions) {
+  private createFileMeta({ PATH, parentSlugs, file, reservedIndex = -1 }: CreateFileMetaOptions) {
     // create file metadata
     const fileFromMeta = typeof file === "string" ? { name: file } : file;
 
@@ -224,6 +235,7 @@ export class Content {
       slugs = [...parentSlugs, slug];
     }
 
+    // NOTE: provide label only when need to have `-` in it
     const label = fileFromMeta.label ?? slug.replaceAll("-", " ");
     const { title } = fileFromMeta;
 
@@ -237,12 +249,12 @@ export class Content {
       url: this.getNavigationURL(slugs),
     };
 
-    this.addMeta({ dir, slugs, file: `${fileFromMeta.name}.mdx`, meta: fileMeta, reservedIndex });
+    this.addMeta({ PATH, slugs, file: `${fileFromMeta.name}.mdx`, meta: fileMeta, reservedIndex });
 
     return fileMeta;
   }
 
-  private createFolderMeta({ dir, parentSlugs, folder }: CreateFolderMetaOptions) {
+  private createFolderMeta({ PATH, parentSlugs, folder }: CreateFolderMetaOptions) {
     //
     const rawFolderName = folder.name;
     let folderName = folder.name;
@@ -254,16 +266,16 @@ export class Content {
       folderName = rawFolderName.replace(/^\(|\)$/, "");
     }
 
-    const folderPath = join(dir, rawFolderName);
+    const folderPATH = join(PATH, rawFolderName);
 
-    const childMeta = this.readMeta(folderPath) || {};
+    const childMeta = this.readMeta(folderPATH);
 
     const isPage = childMeta.page;
 
-    // will be ignored if virtual
+    // this will be ignored for if virtual
     const slug = childMeta.slug ?? folderName;
 
-    const label = childMeta.label ?? slug.replaceAll("-", " ");
+    const label = childMeta.label ?? (isVirtual ? folderName : slug).replaceAll("-", " ");
     const { title } = childMeta;
 
     let slugs = parentSlugs;
@@ -273,7 +285,7 @@ export class Content {
     }
 
     // https://github.com/JadejaHQ/shilpcss/issues/32
-    const reservedIndex = this.list.size;
+    const reservedIndex = this.getLength();
 
     const folderMeta: FolderMeta = {
       type: "folder",
@@ -282,11 +294,9 @@ export class Content {
       label,
       // attr
       title,
-      // link
-      url: this.getNavigationURL(slugs),
       // childs
       childs: this.createTree({
-        dir: folderPath,
+        PATH: folderPATH,
         parentSlugs: slugs,
         reservedIndex: isPage ? reservedIndex : -1,
       }),
@@ -294,13 +304,13 @@ export class Content {
 
     if (isPage) {
       if (!childMeta.name) {
-        return throwError(`"name" property is missing at "${folderPath}${sep}meta.json"`);
+        return throwError(`"name" property is missing at "${folderPATH}${sep}meta.json"`);
       }
 
       this.addMeta({
-        dir,
+        PATH,
         slugs,
-        file: `${rawFolderName}${sep}${childMeta.name}.mdx`,
+        file: join(rawFolderName, `${childMeta.name}.mdx`),
         meta: folderMeta,
         reservedIndex,
       });
@@ -309,9 +319,9 @@ export class Content {
     return folderMeta;
   }
 
-  private addMeta({ dir, slugs, file, meta, reservedIndex = -1 }: AddMetaOptions) {
+  private addMeta({ PATH, slugs, file, meta, reservedIndex = -1 }: AddMetaOptions) {
     //
-    let index = this.list.size;
+    let index = this.getLength();
 
     if (reservedIndex >= 0) {
       if (meta.type === "folder" && meta.isPage) {
@@ -322,15 +332,17 @@ export class Content {
       }
     }
 
-    const relativePath = relative(this.paths.ROOT, dir);
+    // NOTE: no leading slash
+    const relativePath = relative(this.paths.PATH, PATH);
 
     const fullMeta: FullMeta = { ...meta, id: index };
 
     // get data for search
-    try {
-      const filePath = resolve(dir, file);
+    const filePATH = resolve(PATH, file);
 
-      const fileContent = this.readFile(filePath);
+    try {
+      //
+      const fileContent = this.readFile(filePATH);
 
       if (fileContent) {
         //
@@ -345,7 +357,7 @@ export class Content {
       }
       //
     } catch {
-      throwError(`Error: process search data at ${resolve(dir, file)} with index ${index}`);
+      throwError(`Error: process search data at ${filePATH} with index ${index}`);
     }
 
     // get index from slug - O(1)
@@ -368,7 +380,7 @@ export class Content {
 
   private buildSearchIndex() {
     const documents = [...this.list.values()];
-    this.search.ingest(documents);
+    this.search.ingestAll(documents);
   }
 
   /* =========================
@@ -377,6 +389,7 @@ export class Content {
 
   public getAllSlugs() {
     return [...this.slugs.keys()].map((slugs) => ({
+      // src/apps/{dir}/[[...slugs]]/page.tsx
       slugs: slugs.split("/"),
     }));
   }

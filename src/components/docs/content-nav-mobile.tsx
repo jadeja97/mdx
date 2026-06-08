@@ -7,7 +7,7 @@ import { SheetContent, SheetHeader, SheetRoot, SheetTitle, SheetTrigger } from "
 import type { ReactElement } from "react";
 
 import type { Tree } from "@/types/content";
-import type { TOC } from "@/types/docs";
+import type { TOC } from "@/types/module";
 
 /* ============================================================================================= */
 
