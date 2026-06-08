@@ -23,13 +23,22 @@ export const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptio
   const handleActiveIds: IntersectionObserverCallback = (entries) => {
     startTransition(() => {
       setActiveIds((prev) => {
-        const ids = new Set<string>(prev);
+        //
+        const newIds = [...prev];
+        let hasChanged = false;
 
         for (const entry of entries) {
-          ids[entry.isIntersecting ? "add" : "delete"](entry.target.id);
+          if (entry.isIntersecting && !newIds.includes(entry.target.id)) {
+            newIds.push(entry.target.id);
+            hasChanged = true;
+          } else if (!entry.isIntersecting && newIds.includes(entry.target.id)) {
+            const index = newIds.indexOf(entry.target.id);
+            newIds.splice(index, 1);
+            hasChanged = true;
+          }
         }
 
-        return [...ids];
+        return hasChanged ? newIds : prev;
       });
     });
   };

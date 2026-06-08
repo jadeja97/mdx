@@ -40,7 +40,9 @@ export const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivEl
     // TOC dom is not built. Need a manual initialization.
     // explored the `mutationObserver`, but this is the simplest way.
     initialize();
-  }, [initialize]);
+
+    // oxlint-disable react-hooks/exhaustive-deps
+  }, []);
 
   // scroll TOC container to make active links visible (if offscreen)
   useEffect(() => {

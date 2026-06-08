@@ -96,9 +96,12 @@ export interface DocsConfig {
   ) => Configuration;
 }
 
+export type RequiredConstants = Pick<Constants, "DEV" | "PROD" | "SITE_URL" | "VERSION">;
+export type OptionalConstants = Partial<Omit<Constants, keyof RequiredConstants>>;
+
 export interface UserConfig {
   analytics?: Partial<Analytics>;
-  constants: Partial<Constants>;
+  constants: RequiredConstants & OptionalConstants;
   links: {
     navigations: NavLinks;
     socials: SocialLinks;

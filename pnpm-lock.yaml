@@ -20,21 +20,6 @@ importers:
       '@next/third-parties':
         specifier: ^16.2.7
         version: 16.2.7(next@16.2.6(@babel/core@7.29.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
-      '@types/mdx':
-        specifier: ^2.0.13
-        version: 2.0.13
-      '@types/react':
-        specifier: ^19.2.16
-        version: 19.2.16
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.16)
-      '@types/webpack':
-        specifier: ^5.28.5
-        version: 5.28.5
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -78,9 +63,24 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
     devDependencies:
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       '@types/node':
         specifier: ^24.6.2
         version: 24.12.2
+      '@types/react':
+        specifier: ^19.2.16
+        version: 19.2.16
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.16)
+      '@types/webpack':
+        specifier: ^5.28.5
+        version: 5.28.5
       eslint-plugin-react-hooks:
         specifier: ^7.1.1
         version: 7.1.1(eslint@10.2.1)
