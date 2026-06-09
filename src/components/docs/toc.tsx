@@ -13,7 +13,7 @@ import { jumpScroll } from "@/lib/dom/jump-scroll";
 
 import type { ReactElement } from "react";
 
-import type { TOC as TOCType } from "@/types/module";
+import type { TOC as TOCType } from "@/types/content";
 
 /* ============================================================================================= */
 

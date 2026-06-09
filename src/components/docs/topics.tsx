@@ -3,7 +3,7 @@ import { List } from "@/components/list";
 
 import type { ReactElement } from "react";
 
-import type { FileMeta, FolderMeta, Tree } from "@/types/content";
+import type { FileMeta, FolderMeta, PageFolder, RegularFolder, Tree } from "@/types/content";
 
 /* ============================================================================================= */
 
@@ -22,7 +22,7 @@ export const Topics = ({ tree }: TopicsProps): ReactElement<HTMLDivElement> => (
 /* ============================================================================================= */
 
 export interface FolderProps {
-  meta: FolderMeta;
+  meta: RegularFolder;
 }
 
 export const Folder = ({ meta }: FolderProps): ReactElement<HTMLDivElement> => (
@@ -41,7 +41,9 @@ export const Folder = ({ meta }: FolderProps): ReactElement<HTMLDivElement> => (
 
 /* ============================================================================================= */
 
-export type FolderPageProps = FolderProps;
+export interface FolderPageProps {
+  meta: PageFolder;
+}
 
 export const FolderPage = ({ meta }: FolderPageProps): ReactElement<HTMLDivElement> => (
   <div data-folder-page={meta.label}>
@@ -78,8 +80,10 @@ export const RenderChild = ({
   }
 
   if (meta.type === "folder") {
-    const Component = meta.isPage ? FolderPage : Folder;
-    return <Component meta={meta} />;
+    if (meta.isPage) {
+      return <FolderPage meta={meta} />;
+    }
+    return <Folder meta={meta} />;
   }
 
   return null;

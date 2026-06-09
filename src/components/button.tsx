@@ -2,8 +2,9 @@ import { Button as BaseButton } from "@base-ui/react/button";
 
 import { cls, cva } from "@/lib/dom/utils";
 
-import type { VariantProps } from "class-variance-authority";
 import type { ReactElement } from "react";
+
+import type { VariantProps } from "@/lib/dom/utils";
 
 /* ============================================================================================= */
 

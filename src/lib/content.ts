@@ -289,7 +289,7 @@ export class Content {
 
     const folderMeta: FolderMeta = {
       type: "folder",
-      isPage,
+      isPage: false,
       // text
       label,
       // attr
@@ -303,6 +303,11 @@ export class Content {
     };
 
     if (isPage) {
+      // @ts-expect-error  this is valid
+      folderMeta.isPage = true;
+      // @ts-expect-error  this is valid
+      folderMeta.url = this.getNavigationURL(slugs);
+
       if (!childMeta.name) {
         return throwError(`"name" property is missing at "${folderPATH}${sep}meta.json"`);
       }

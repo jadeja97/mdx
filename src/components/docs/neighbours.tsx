@@ -15,7 +15,7 @@ export const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDi
   //
 
   <div className="page__neighbours">
-    {prev && (
+    {prev?.url && (
       <Link
         className={cls("prev-btn", buttonVariants({ variant: "outline" }))}
         href={prev.url}
@@ -25,7 +25,7 @@ export const Neighbours = ({ prev, next }: NeighboursProps): ReactElement<HTMLDi
       </Link>
     )}
 
-    {next && (
+    {next?.url && (
       <Link
         className={cls("next-btn", buttonVariants({ variant: "outline" }))}
         href={next.url}

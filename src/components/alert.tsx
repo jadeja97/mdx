@@ -7,10 +7,10 @@ import {
 } from "@/components/assets/icons";
 import { cls, cva } from "@/lib/dom/utils";
 
-import type { VariantProps } from "class-variance-authority";
 import type { ComponentProps, ReactElement } from "react";
 
 import type { SVGEl, SVGProps } from "@/components/svg";
+import type { VariantProps } from "@/lib/dom/utils";
 
 /* ============================================================================================= */
 

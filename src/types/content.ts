@@ -170,9 +170,8 @@ export interface Folder {
   name: string;
 }
 
-export interface FolderMeta {
+export interface FolderBase {
   type: "folder";
-  isPage?: boolean;
   /**
    * text
    */
@@ -186,6 +185,21 @@ export interface FolderMeta {
    */
   childs: Tree;
 }
+
+export type PageFolder = FolderBase & {
+  isPage: true;
+  /**
+   * link
+   */
+  url: string;
+};
+
+export type RegularFolder = FolderBase & {
+  isPage?: false | undefined;
+  url?: never;
+};
+
+export type FolderMeta = PageFolder | RegularFolder;
 
 export interface CreateFolderMetaOptions {
   PATH: Paths["PATH"];

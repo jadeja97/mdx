@@ -21,7 +21,7 @@ import { cls } from "@/lib/dom/utils";
 import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 import type { DialogCloseProps } from "@/components/dialog";
-import type { SearchQueryResult, UseSearchOptions } from "@/hooks/use-search";
+import type { SearchError, SearchQueryResult, UseSearchOptions } from "@/hooks/use-search";
 
 /* ============================================================================================= */
 
@@ -45,10 +45,7 @@ export interface SearchRootChildParams {
   search: string;
   ready: boolean;
   handleSearch: (text: string) => void;
-  error: {
-    message: string;
-    reason: unknown;
-  } | null;
+  error: SearchError;
   result: SearchQueryResult | undefined;
 }
 

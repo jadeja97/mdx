@@ -24,6 +24,11 @@ export type UseSearchOptions = Pick<
   "DEV" | "SEARCH_INDEX_FILE_NAME" | "SEARCH_INDEX_FIELDS" | "SEARCH_INDEX_RETURN_FIELDS"
 >;
 
+export type SearchError = {
+  message: string;
+  reason: unknown;
+} | null;
+
 /**
  * load the search index and a method to query
  *
@@ -44,10 +49,7 @@ export const useSearch = ({
   const abortController = useRef<AbortController>(null);
 
   const [ready, setReady] = useState(false);
-  const [searchError, setSearchError] = useState<{
-    message: string;
-    reason: unknown;
-  } | null>(null);
+  const [searchError, setSearchError] = useState<SearchError>(null);
 
   // load search index
   // for production, it will be force cached
