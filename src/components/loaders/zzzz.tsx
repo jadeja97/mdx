@@ -10,11 +10,13 @@ export type ZZZZProps = ComponentProps<"div">;
 	author: necatimertmetin
 	link: https://uiverse.io/necatimertmetin/quiet-bulldog-16
 */
-export const ZZZZ = ({ className, ...rest }: ZZZZProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("zzzz", className)} {...rest}>
-    <div>z</div>
-    <div>z</div>
-    <div>z</div>
-    <div>z</div>
-  </div>
-);
+export const ZZZZ = ({ className, ...rest }: ZZZZProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("zzzz", className)} {...rest}>
+      <div>z</div>
+      <div>z</div>
+      <div>z</div>
+      <div>z</div>
+    </div>
+  );
+};

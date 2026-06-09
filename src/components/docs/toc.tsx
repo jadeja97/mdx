@@ -29,7 +29,9 @@ export const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivEl
   const topOffset = useGetTopOffset();
 
   const { activeIds = [], initialize } = useScrollSpy({
-    tocIds: toc.map((item) => item.id),
+    tocIds: toc.map((item) => {
+      return item.id;
+    }),
     scrollContainer: "body",
     offset: topOffset,
   });
@@ -70,18 +72,20 @@ export const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivEl
       {!isMobile && <span className="toc__label">On This Page</span>}
 
       <List unstyled>
-        {toc.map((item) => (
-          <li key={item.id} data-level={item.level > 2 ? item.level : undefined}>
-            <Wrapper {...(isMobile ? { isWrapper: true, hideFocus: true } : {})}>
-              <Link
-                href={`#${item.id}`}
-                data-active={activeIds.includes(item.id) ? true : undefined}
-              >
-                {item.text}
-              </Link>
-            </Wrapper>
-          </li>
-        ))}
+        {toc.map((item) => {
+          return (
+            <li key={item.id} data-level={item.level > 2 ? item.level : undefined}>
+              <Wrapper {...(isMobile ? { isWrapper: true, hideFocus: true } : {})}>
+                <Link
+                  href={`#${item.id}`}
+                  data-active={activeIds.includes(item.id) ? true : undefined}
+                >
+                  {item.text}
+                </Link>
+              </Wrapper>
+            </li>
+          );
+        })}
       </List>
     </div>
   );

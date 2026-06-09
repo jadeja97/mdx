@@ -13,11 +13,13 @@ export const TableComposed = ({
   children,
   root = {},
   ...rest
-}: TableComposedProps): ReactElement<HTMLTableElement> => (
-  <TableRoot {...root}>
-    <Table {...rest}>{children}</Table>
-  </TableRoot>
-);
+}: TableComposedProps): ReactElement<HTMLTableElement> => {
+  return (
+    <TableRoot {...root}>
+      <Table {...rest}>{children}</Table>
+    </TableRoot>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -29,11 +31,13 @@ export const TableRoot = ({
   children,
   className,
   ...rest
-}: TableRootProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("table", className)} {...rest}>
-    {children}
-  </div>
-);
+}: TableRootProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("table", className)} {...rest}>
+      {children}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -41,6 +45,6 @@ export type TableProps = {
   children: ReactNode;
 } & ComponentProps<"table">;
 
-export const Table = ({ children, ...rest }: TableProps): ReactElement<HTMLTableElement> => (
-  <table {...rest}>{children}</table>
-);
+export const Table = ({ children, ...rest }: TableProps): ReactElement<HTMLTableElement> => {
+  return <table {...rest}>{children}</table>;
+};

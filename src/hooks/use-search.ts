@@ -1,4 +1,4 @@
-import { sleep } from "@jadeja/ts/lib";
+import { sleep } from "@jadeja/ts/lib/utils";
 import MiniSearch from "minisearch";
 import { useRef, useEffect, useState } from "react";
 
@@ -153,12 +153,11 @@ export const useSearch = ({
   };
 
   // abort the search index request on unmount
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    return () => {
       abortController.current?.abort();
-    },
-    [],
-  );
+    };
+  }, []);
 
   return {
     initialize,

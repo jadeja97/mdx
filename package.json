@@ -4,11 +4,6 @@
   "version": "1.0.0-alpha.0",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.js",
-      "default": "./dist/main.js"
-    },
     "./components/*": {
       "types": "./dist/components/*.d.ts",
       "import": "./dist/components/*.js",
@@ -39,8 +34,15 @@
       "import": "./dist/scripts/*.js",
       "default": "./dist/scripts/*.js"
     },
-    "./types": {
-      "types": "./dist/types/index.d.ts"
+    "./types/*": {
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/types/*.d.ts",
+      "defaut": "./dist/types/*.d.ts"
+    },
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
     }
   },
   "scripts": {
@@ -51,7 +53,7 @@
     "publish-it": "pnpm build && pnpm publish --tag alpha --access public --no-git-checks"
   },
   "dependencies": {
-    "@jadeja/ts": "1.0.0-alpha.0",
+    "@jadeja/ts": "1.0.0-alpha.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "front-matter": "^4.0.2",
@@ -76,7 +78,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.5",
     "oxfmt": "^0.48.0",
-    "oxlint": "^1.63.0",
+    "oxlint": "^1.65.0",
     "oxlint-tsgolint": "^0.22.1",
     "typescript": "^6.0.3",
     "unplugin-dts": "^1.0.0",

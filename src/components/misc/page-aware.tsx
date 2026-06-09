@@ -71,18 +71,20 @@ export type InitialLoadProps = Pick<DocsConfig["constants"], "SITE_URL">;
  * @param options - options for routing
  * @param options.SITE_URL - site url or domain
  */
-export const InitialLoad = ({ SITE_URL }: InitialLoadProps): ReactElement<HTMLScriptElement> => (
-  <script
-    suppressHydrationWarning
-    // oxlint-disable react/no-danger
-    dangerouslySetInnerHTML={{
-      __html: `
+export const InitialLoad = ({ SITE_URL }: InitialLoadProps): ReactElement<HTMLScriptElement> => {
+  return (
+    <script
+      suppressHydrationWarning
+      // oxlint-disable react/no-danger
+      dangerouslySetInnerHTML={{
+        __html: `
 				(function(pathname, addDataAttrToHTML) {
 					//
 					addDataAttrToHTML(pathname, "${SITE_URL}", ${sanitizePathname});
 					//
 				})(location.pathname, ${addDataAttrToHTML})
 			`,
-    }}
-  />
-);
+      }}
+    />
+  );
+};

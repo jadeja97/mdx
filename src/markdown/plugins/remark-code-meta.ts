@@ -7,29 +7,31 @@ import type { Root } from "mdast";
 /**
  * remark plugin to extract code metadata as props
  */
-export const remarkCodeMeta = () => (tree: Root) => {
-  visit(tree, "code", (node) => {
-    // filter backtick code (``)
-    // it doesn't have `lang`
-    if (!node.lang) {
-      return;
-    }
+export const remarkCodeMeta = () => {
+  return (tree: Root) => {
+    visit(tree, "code", (node) => {
+      // filter backtick code (``)
+      // it doesn't have `lang`
+      if (!node.lang) {
+        return;
+      }
 
-    // ensure data exist
-    node.data ??= {};
+      // ensure data exist
+      node.data ??= {};
 
-    // expose props to `code` element
-    // hProperties passed as serialized
-    // oxlint-disable typescript/no-unsafe-assignment
-    // @ts-expect-error  type issue
-    node.data.hProperties = {
+      // expose props to `code` element
+      // hProperties passed as serialized
+      // oxlint-disable typescript/no-unsafe-assignment
       // @ts-expect-error  type issue
-      ...node.data.hProperties,
-      lang: node.lang,
-      // rawValue: node.value,
-      ...processMeta(node.meta),
-    };
-  });
+      node.data.hProperties = {
+        // @ts-expect-error  type issue
+        ...node.data.hProperties,
+        lang: node.lang,
+        // rawValue: node.value,
+        ...processMeta(node.meta),
+      };
+    });
+  };
 };
 
 /* ============================================================================================= */

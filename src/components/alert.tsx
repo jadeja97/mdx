@@ -48,16 +48,18 @@ export const Alert = ({
   title,
   children,
   ...rest
-}: AlertProps): ReactElement<ReturnType<typeof AlertRoot>> => (
-  <AlertRoot {...rest} hasIcon={hasIcon} variant={variant}>
-    {/*  */}
-    {hasIcon && <AlertIcon variant={variant} />}
+}: AlertProps): ReactElement<ReturnType<typeof AlertRoot>> => {
+  return (
+    <AlertRoot {...rest} hasIcon={hasIcon} variant={variant}>
+      {/*  */}
+      {hasIcon && <AlertIcon variant={variant} />}
 
-    <AlertTitle variant={variant}>{title}</AlertTitle>
+      <AlertTitle variant={variant}>{title}</AlertTitle>
 
-    {children && <AlertDescription>{children}</AlertDescription>}
-  </AlertRoot>
-);
+      {children && <AlertDescription>{children}</AlertDescription>}
+    </AlertRoot>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -70,9 +72,11 @@ export const AlertRoot = ({
   variant,
   hasIcon,
   ...rest
-}: RootProps): ReactElement<HTMLDivElement> => (
-  <div {...rest} role="alert" className={cls(alertVariants({ variant, hasIcon }), className)} />
-);
+}: RootProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div {...rest} role="alert" className={cls(alertVariants({ variant, hasIcon }), className)} />
+  );
+};
 
 /* ============================================================================================= */
 
@@ -110,11 +114,13 @@ export const AlertTitle = ({
   className,
   variant,
   ...rest
-}: TitleProps): ReactElement<HTMLDivElement> => (
-  <div {...rest} className={cls("alert__title limit-lines", className)}>
-    {children ?? variant ?? "Note"}
-  </div>
-);
+}: TitleProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div {...rest} className={cls("alert__title limit-lines", className)}>
+      {children ?? variant ?? "Note"}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -123,6 +129,6 @@ export type DescriptionProps = ComponentProps<"div">;
 export const AlertDescription = ({
   className,
   ...rest
-}: DescriptionProps): ReactElement<HTMLDivElement> => (
-  <div {...rest} className={cls("alert__description", className)} />
-);
+}: DescriptionProps): ReactElement<HTMLDivElement> => {
+  return <div {...rest} className={cls("alert__description", className)} />;
+};

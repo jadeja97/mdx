@@ -19,19 +19,21 @@ export type CodeBlockWithoutLangProps = {
 
 export type CodeBlockProps = CodeBlockWithLangProps | CodeBlockWithoutLangProps;
 
-export const CodeBlock = (props: CodeBlockProps): ReactElement<HTMLElement | HTMLDivElement> => (
-  // @ts-expect-error  suppress the error
-  <CodeBlockRoot {...props}>
-    {props.lang ? (
-      <>
-        <CodeBlockHead title={props.title} content={props.children} />
-        <CodeBlockBody>{props.children}</CodeBlockBody>
-      </>
-    ) : (
-      props.children
-    )}
-  </CodeBlockRoot>
-);
+export const CodeBlock = (props: CodeBlockProps): ReactElement<HTMLElement | HTMLDivElement> => {
+  return (
+    // @ts-expect-error  suppress the error
+    <CodeBlockRoot {...props}>
+      {props.lang ? (
+        <>
+          <CodeBlockHead title={props.title} content={props.children} />
+          <CodeBlockBody>{props.children}</CodeBlockBody>
+        </>
+      ) : (
+        props.children
+      )}
+    </CodeBlockRoot>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -104,10 +106,12 @@ export const CodeBlockBody = ({
   children,
   className,
   ...rest
-}: CodeBlockBodyProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("code-block__body", className)} {...rest}>
-    <pre>
-      <code>{children}</code>
-    </pre>
-  </div>
-);
+}: CodeBlockBodyProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("code-block__body", className)} {...rest}>
+      <pre>
+        <code>{children}</code>
+      </pre>
+    </div>
+  );
+};

@@ -49,8 +49,12 @@ export const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptio
     const elements = tocIds
       // if using `#${id}` to query, and `id` starts with number, it will throw error
       // using `id` as attribute to prevent issue
-      .map((id) => container.querySelector(`[id="${id}"]`))
-      .filter((x) => x !== null);
+      .map((id) => {
+        return container.querySelector(`[id="${id}"]`);
+      })
+      .filter((x) => {
+        return x !== null;
+      });
 
     if (elements.length === 0) {
       return;

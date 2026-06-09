@@ -12,11 +12,13 @@ export const BannerRoot = ({
   children,
   className,
   ...rest
-}: BannerRootProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("banner__wrapper", className)} {...rest}>
-    {children}
-  </div>
-);
+}: BannerRootProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("banner__wrapper", className)} {...rest}>
+      {children}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -28,8 +30,10 @@ export const Banner = ({
   children,
   className,
   ...rest
-}: BannerProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("banner", className)} {...rest}>
-    {children}
-  </div>
-);
+}: BannerProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("banner", className)} {...rest}>
+      {children}
+    </div>
+  );
+};

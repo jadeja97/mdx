@@ -41,20 +41,22 @@ export const ThemeToggle = (): ReturnType<typeof DropdownRoot> => {
       </DropdownTrigger>
 
       <DropdownContent align="end" className="theme-toggle__content">
-        {themes.map((theme) => (
-          <DropdownItem
-            key={theme}
-            onClick={() => {
-              setTheme(theme);
-            }}
-          >
-            <Icon theme={theme} />
+        {themes.map((theme) => {
+          return (
+            <DropdownItem
+              key={theme}
+              onClick={() => {
+                setTheme(theme);
+              }}
+            >
+              <Icon theme={theme} />
 
-            <span className="theme-toggle__label">{theme}</span>
+              <span className="theme-toggle__label">{theme}</span>
 
-            {theme === activeTheme && <CheckIcon className="theme-toggle__active-icon" />}
-          </DropdownItem>
-        ))}
+              {theme === activeTheme && <CheckIcon className="theme-toggle__active-icon" />}
+            </DropdownItem>
+          );
+        })}
       </DropdownContent>
     </DropdownRoot>
   );

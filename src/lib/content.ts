@@ -4,11 +4,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { cwd } from "node:process";
 
-import { throwError } from "@jadeja/ts/lib";
+import { throwError } from "@jadeja/ts/lib/logger";
+import { Singleton } from "@jadeja/ts/lib/singleton";
 import frontMatter from "front-matter";
 
 import { Search } from "@/lib/search";
-import { Singleton } from "@/lib/singleton";
 
 import type {
   AddMetaOptions,
@@ -79,6 +79,7 @@ export class Content {
     registerMethods([
       "readFile",
       "readMeta",
+      "getLength",
       "createTree",
       "createFileMeta",
       "createFolderMeta",
@@ -215,12 +216,17 @@ export class Content {
     });
 
     // get folders meta
-    const folders = folderQueue.map((folder) =>
+    const folders = folderQueue.map((folder) => {
       // hidden folders handled at files processing (above block)
-      this.createFolderMeta({ PATH, parentSlugs, folder }),
-    );
+      return this.createFolderMeta({ PATH, parentSlugs, folder });
+    });
 
-    return [...files.filter((x) => x !== null), ...folders];
+    return [
+      ...files.filter((x) => {
+        return x !== null;
+      }),
+      ...folders,
+    ];
   }
 
   private createFileMeta({ PATH, parentSlugs, file, reservedIndex = -1 }: CreateFileMetaOptions) {
@@ -309,7 +315,7 @@ export class Content {
       folderMeta.url = this.getNavigationURL(slugs);
 
       if (!childMeta.name) {
-        return throwError(`"name" property is missing at "${folderPATH}${sep}meta.json"`);
+        return throwError(`"name" property is missing at "${join(folderPATH, "meta.json")}`);
       }
 
       this.addMeta({
@@ -393,10 +399,12 @@ export class Content {
 	========================= */
 
   public getAllSlugs() {
-    return [...this.slugs.keys()].map((slugs) => ({
-      // src/apps/{dir}/[[...slugs]]/page.tsx
-      slugs: slugs.split("/"),
-    }));
+    return [...this.slugs.keys()].map((slugs) => {
+      return {
+        // src/apps/{dir}/[[...slugs]]/page.tsx
+        slugs: slugs.split("/"),
+      };
+    });
   }
 
   public getFileInfo(slugs = [] as string[]): FileInfo {

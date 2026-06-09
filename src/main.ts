@@ -1,4 +1,4 @@
-import { deepMergeObj } from "@jadeja/ts/lib";
+import { deepMergeObj } from "@jadeja/ts/lib/operations";
 
 import { defaultConfig } from "@/config";
 

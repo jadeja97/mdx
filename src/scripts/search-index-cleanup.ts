@@ -2,7 +2,7 @@ import { readdirSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
 
-import { log } from "@jadeja/ts/lib";
+import { log } from "@jadeja/ts/lib/logger";
 
 import type { DocsConfig } from "@/types/config";
 
@@ -23,7 +23,9 @@ export const searchIndexCleanup: SearchIndexCleanup = (SEARCH_INDEX_KEY) => {
 
   const files = readdirSync(publicDir);
 
-  const searchIndexFiles = files.filter((file) => file.startsWith(SEARCH_INDEX_KEY));
+  const searchIndexFiles = files.filter((file) => {
+    return file.startsWith(SEARCH_INDEX_KEY);
+  });
 
   for (const file of searchIndexFiles) {
     //

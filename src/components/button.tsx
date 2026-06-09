@@ -54,13 +54,15 @@ export const Button = ({
   size,
   type = "button",
   ...rest
-}: ButtonProps): ReactElement<HTMLButtonElement> => (
-  <BaseButton
-    {...rest}
-    nativeButton={!rest.render}
-    className={cls(buttonVariants({ variant, size, hasIcon }), className)}
-    // prevent form from submitting on enter key press,
-    // by default, it consider any button as submit button
-    type={type}
-  />
-);
+}: ButtonProps): ReactElement<HTMLButtonElement> => {
+  return (
+    <BaseButton
+      {...rest}
+      nativeButton={!rest.render}
+      className={cls(buttonVariants({ variant, size, hasIcon }), className)}
+      // prevent form from submitting on enter key press,
+      // by default, it consider any button as submit button
+      type={type}
+    />
+  );
+};

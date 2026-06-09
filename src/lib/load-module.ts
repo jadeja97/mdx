@@ -1,4 +1,4 @@
-import { throwError } from "@jadeja/ts/lib";
+import { throwError } from "@jadeja/ts/lib/logger";
 
 import type { FC } from "react";
 

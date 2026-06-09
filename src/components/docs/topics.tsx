@@ -11,13 +11,15 @@ export interface TopicsProps {
   tree: Tree;
 }
 
-export const Topics = ({ tree }: TopicsProps): ReactElement<HTMLDivElement> => (
-  <div className="topics">
-    {tree.map((branch) => (
-      <RenderChild key={branch.label} meta={branch} />
-    ))}
-  </div>
-);
+export const Topics = ({ tree }: TopicsProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className="topics">
+      {tree.map((branch) => {
+        return <RenderChild key={branch.label} meta={branch} />;
+      })}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -25,19 +27,23 @@ export interface FolderProps {
   meta: RegularFolder;
 }
 
-export const Folder = ({ meta }: FolderProps): ReactElement<HTMLDivElement> => (
-  <div data-folder={meta.label}>
-    <span className="folder__label">{meta.label}</span>
+export const Folder = ({ meta }: FolderProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div data-folder={meta.label}>
+      <span className="folder__label">{meta.label}</span>
 
-    <List unstyled>
-      {meta.childs.map((child) => (
-        <li key={child.label}>
-          <RenderChild meta={child} />
-        </li>
-      ))}
-    </List>
-  </div>
-);
+      <List unstyled>
+        {meta.childs.map((child) => {
+          return (
+            <li key={child.label}>
+              <RenderChild meta={child} />
+            </li>
+          );
+        })}
+      </List>
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -45,20 +51,24 @@ export interface FolderPageProps {
   meta: PageFolder;
 }
 
-export const FolderPage = ({ meta }: FolderPageProps): ReactElement<HTMLDivElement> => (
-  <div data-folder-page={meta.label}>
-    {/*  */}
-    <RenderChild meta={{ ...meta, type: "file" }} />
+export const FolderPage = ({ meta }: FolderPageProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div data-folder-page={meta.label}>
+      {/*  */}
+      <RenderChild meta={{ ...meta, type: "file" }} />
 
-    <List unstyled>
-      {meta.childs.map((child) => (
-        <li key={child.label}>
-          <RenderChild meta={child} />
-        </li>
-      ))}
-    </List>
-  </div>
-);
+      <List unstyled>
+        {meta.childs.map((child) => {
+          return (
+            <li key={child.label}>
+              <RenderChild meta={child} />
+            </li>
+          );
+        })}
+      </List>
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 

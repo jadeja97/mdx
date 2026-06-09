@@ -2,7 +2,7 @@
 
 /* ============================================================================================= */
 
-import { debounce } from "@jadeja/ts/lib";
+import debounce from "@jadeja/ts/lib/debounce";
 import { useState } from "react";
 
 import { CheckIcon, CopyIcon } from "@/components/assets/icons";

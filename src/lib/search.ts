@@ -2,9 +2,8 @@ import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
 
+import { Singleton } from "@jadeja/ts/lib/singleton";
 import MiniSearch from "minisearch";
-
-import { Singleton } from "@/lib/singleton";
 
 import type { DocsConfig } from "@/types/config";
 
@@ -38,7 +37,7 @@ export class Search {
 
     const registerMethods = instance.registerMethods.bind(instance, this);
 
-    registerMethods(["createSearchInstance", "ingest"]);
+    registerMethods(["createSearchInstance", "ingestAll"]);
 
     if (!instance.searchOptions) {
       instance.searchOptions = searchOptions;

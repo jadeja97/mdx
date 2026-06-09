@@ -14,10 +14,12 @@ export const Separator = ({
   className,
   vertical = false,
   ...rest
-}: SeparatorProps): ReactElement<HTMLDivElement> => (
-  <BaseSeparator
-    {...rest}
-    orientation={vertical ? "vertical" : "horizontal"}
-    className={cls("separator", className)}
-  />
-);
+}: SeparatorProps): ReactElement<HTMLDivElement> => {
+  return (
+    <BaseSeparator
+      {...rest}
+      orientation={vertical ? "vertical" : "horizontal"}
+      className={cls("separator", className)}
+    />
+  );
+};

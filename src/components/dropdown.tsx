@@ -26,9 +26,9 @@ export type DropdownTriggerProps = Menu.Trigger.Props;
 export const DropdownTrigger = ({
   className,
   ...rest
-}: DropdownTriggerProps): ReactElement<HTMLButtonElement> => (
-  <Menu.Trigger {...rest} className={cls("dropdown__trigger", className)} />
-);
+}: DropdownTriggerProps): ReactElement<HTMLButtonElement> => {
+  return <Menu.Trigger {...rest} className={cls("dropdown__trigger", className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -52,20 +52,22 @@ export const DropdownContent = ({
   className,
   ref,
   ...rest
-}: DropdownContentProps): ReactElement<HTMLDivElement> => (
-  <DropdownPortal {...portal}>
-    <Menu.Positioner
-      {...positioner}
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      sideOffset={sideOffset}
-      className={cls("dropdown__content-positioner", positioner.className)}
-    >
-      <Menu.Popup {...rest} className={cls("dropdown__content", className)} ref={ref} />
-    </Menu.Positioner>
-  </DropdownPortal>
-);
+}: DropdownContentProps): ReactElement<HTMLDivElement> => {
+  return (
+    <DropdownPortal {...portal}>
+      <Menu.Positioner
+        {...positioner}
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        sideOffset={sideOffset}
+        className={cls("dropdown__content-positioner", positioner.className)}
+      >
+        <Menu.Popup {...rest} className={cls("dropdown__content", className)} ref={ref} />
+      </Menu.Positioner>
+    </DropdownPortal>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -74,9 +76,9 @@ export type DropdownGroupProps = Menu.Group.Props;
 export const DropdownGroup = ({
   className,
   ...rest
-}: DropdownGroupProps): ReactElement<HTMLDivElement> => (
-  <Menu.Group {...rest} className={cls("dropdown__group", className)} />
-);
+}: DropdownGroupProps): ReactElement<HTMLDivElement> => {
+  return <Menu.Group {...rest} className={cls("dropdown__group", className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -86,9 +88,9 @@ export const DropdownItem = ({
   className,
   inset = false,
   ...rest
-}: DropdownItemProps): ReactElement<HTMLDivElement> => (
-  <Menu.Item {...rest} className={cls("dropdown__item", { inset }, className)} />
-);
+}: DropdownItemProps): ReactElement<HTMLDivElement> => {
+  return <Menu.Item {...rest} className={cls("dropdown__item", { inset }, className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -98,18 +100,20 @@ export const DropdownCheckboxItem = ({
   children,
   className,
   ...rest
-}: DropdownCheckboxItemProps): ReactElement<HTMLDivElement> => (
-  <Menu.CheckboxItem {...rest} className={cls("dropdown__checkbox-item", className)}>
-    <span className="dropdown__checkbox-item-wrapper">
-      <Menu.CheckboxItemIndicator>
-        <CheckIcon />
-      </Menu.CheckboxItemIndicator>
-    </span>
+}: DropdownCheckboxItemProps): ReactElement<HTMLDivElement> => {
+  return (
+    <Menu.CheckboxItem {...rest} className={cls("dropdown__checkbox-item", className)}>
+      <span className="dropdown__checkbox-item-wrapper">
+        <Menu.CheckboxItemIndicator>
+          <CheckIcon />
+        </Menu.CheckboxItemIndicator>
+      </span>
 
-    {children}
-    {/*  */}
-  </Menu.CheckboxItem>
-);
+      {children}
+      {/*  */}
+    </Menu.CheckboxItem>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -118,9 +122,9 @@ export type DropdownRadioGroupProps = Menu.RadioGroup.Props;
 export const DropdownRadioGroup = ({
   className,
   ...rest
-}: DropdownRadioGroupProps): ReactElement<HTMLDivElement> => (
-  <Menu.RadioGroup {...rest} className={cls("dropdown__radio-group", className)} />
-);
+}: DropdownRadioGroupProps): ReactElement<HTMLDivElement> => {
+  return <Menu.RadioGroup {...rest} className={cls("dropdown__radio-group", className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -130,18 +134,20 @@ export const DropdownRadioItem = ({
   children,
   className,
   ...rest
-}: DropdownRadioItemProps): ReactElement<HTMLDivElement> => (
-  <Menu.RadioItem {...rest} className={cls("dropdown__radio-item", className)}>
-    <span className="dropdown__radio-item-wrapper">
-      <Menu.RadioItemIndicator>
-        <CircleIcon />
-      </Menu.RadioItemIndicator>
-    </span>
+}: DropdownRadioItemProps): ReactElement<HTMLDivElement> => {
+  return (
+    <Menu.RadioItem {...rest} className={cls("dropdown__radio-item", className)}>
+      <span className="dropdown__radio-item-wrapper">
+        <Menu.RadioItemIndicator>
+          <CircleIcon />
+        </Menu.RadioItemIndicator>
+      </span>
 
-    {children}
-    {/*  */}
-  </Menu.RadioItem>
-);
+      {children}
+      {/*  */}
+    </Menu.RadioItem>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -151,9 +157,9 @@ export const DropdownLabel = ({
   className,
   inset = false,
   ...rest
-}: DropdownLabelProps): ReactElement<HTMLDivElement> => (
-  <Menu.GroupLabel {...rest} className={cls("dropdown__label", { inset }, className)} />
-);
+}: DropdownLabelProps): ReactElement<HTMLDivElement> => {
+  return <Menu.GroupLabel {...rest} className={cls("dropdown__label", { inset }, className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -162,9 +168,9 @@ export type DropdownSeparatorProps = Menu.Separator.Props;
 export const DropdownSeparator = ({
   className,
   ...rest
-}: DropdownSeparatorProps): ReactElement<HTMLDivElement> => (
-  <Menu.Separator {...rest} className={cls("dropdown__separator", className)} />
-);
+}: DropdownSeparatorProps): ReactElement<HTMLDivElement> => {
+  return <Menu.Separator {...rest} className={cls("dropdown__separator", className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -173,9 +179,9 @@ export type DropdownShortcutProps = ComponentProps<"kbd">;
 export const DropdownShortcut = ({
   className,
   ...rest
-}: DropdownShortcutProps): ReactElement<HTMLElement> => (
-  <kbd {...rest} className={cls("dropdown__shortcut", className)} />
-);
+}: DropdownShortcutProps): ReactElement<HTMLElement> => {
+  return <kbd {...rest} className={cls("dropdown__shortcut", className)} />;
+};
 
 /* ============================================================================================= */
 
@@ -186,13 +192,15 @@ export const DropdownSubTrigger = ({
   className,
   inset,
   ...rest
-}: DropdownSubTriggerProps): ReactElement<HTMLDivElement> | ReactElement<HTMLButtonElement> => (
-  <Menu.SubmenuTrigger {...rest} className={cls("dropdown__sub-trigger", { inset }, className)}>
-    {children}
+}: DropdownSubTriggerProps): ReactElement<HTMLDivElement> | ReactElement<HTMLButtonElement> => {
+  return (
+    <Menu.SubmenuTrigger {...rest} className={cls("dropdown__sub-trigger", { inset }, className)}>
+      {children}
 
-    <ChevronRightIcon />
-  </Menu.SubmenuTrigger>
-);
+      <ChevronRightIcon />
+    </Menu.SubmenuTrigger>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -206,14 +214,16 @@ export const DropdownSubContent = ({
   side = "right",
   sideOffset = 0,
   ...rest
-}: DropdownSubContentProps): ReactElement<HTMLDivElement> => (
-  <DropdownContent
-    {...rest}
-    align={align}
-    alignOffset={alignOffset}
-    side={side}
-    sideOffset={sideOffset}
-    inset={inset}
-    className={cls("dropdown__sub-content", className)}
-  />
-);
+}: DropdownSubContentProps): ReactElement<HTMLDivElement> => {
+  return (
+    <DropdownContent
+      {...rest}
+      align={align}
+      alignOffset={alignOffset}
+      side={side}
+      sideOffset={sideOffset}
+      inset={inset}
+      className={cls("dropdown__sub-content", className)}
+    />
+  );
+};

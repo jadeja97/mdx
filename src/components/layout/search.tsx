@@ -4,7 +4,7 @@
 
 /* ============================================================================================= */
 
-import { debounce } from "@jadeja/ts/lib";
+import debounce from "@jadeja/ts/lib/debounce";
 import { useState, useEffect, startTransition, useRef, createContext, useContext } from "react";
 
 import { XIcon } from "@/components/assets/icons";
@@ -112,34 +112,36 @@ export const SearchRoot = ({
 
 export type SearchProps = UseSearchOptions;
 
-export const Search = (props: SearchProps): ReturnType<typeof SearchRoot> => (
-  <SearchRoot {...props}>
-    <SearchCloseButton>
-      <XIcon />
-    </SearchCloseButton>
+export const Search = (props: SearchProps): ReturnType<typeof SearchRoot> => {
+  return (
+    <SearchRoot {...props}>
+      <SearchCloseButton>
+        <XIcon />
+      </SearchCloseButton>
 
-    <SearchInput />
+      <SearchInput />
 
-    <SearchErrorRoot>
-      <SearchErrorMessage />
-    </SearchErrorRoot>
+      <SearchErrorRoot>
+        <SearchErrorMessage />
+      </SearchErrorRoot>
 
-    <SearchResult>
-      <SearchResultStates />
-      <Separator />
-      <SearchResultContainer>
-        <SearchResultNoContent />
-        <SearchResultListRoot>
-          <SearchResultList />
-        </SearchResultListRoot>
-      </SearchResultContainer>
-    </SearchResult>
+      <SearchResult>
+        <SearchResultStates />
+        <Separator />
+        <SearchResultContainer>
+          <SearchResultNoContent />
+          <SearchResultListRoot>
+            <SearchResultList />
+          </SearchResultListRoot>
+        </SearchResultContainer>
+      </SearchResult>
 
-    <SearchLoaderRoot>
-      <SearchLoader />
-    </SearchLoaderRoot>
-  </SearchRoot>
-);
+      <SearchLoaderRoot>
+        <SearchLoader />
+      </SearchLoaderRoot>
+    </SearchRoot>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -275,11 +277,13 @@ export const SearchResultContainer = ({
   scrollFade = true,
   children,
   className,
-}: SearchResultContainerProps): ReactElement<HTMLDivElement> => (
-  <div className={cls("search-result__container", { "scroll-fade": scrollFade }, className)}>
-    {children}
-  </div>
-);
+}: SearchResultContainerProps): ReactElement<HTMLDivElement> => {
+  return (
+    <div className={cls("search-result__container", { "scroll-fade": scrollFade }, className)}>
+      {children}
+    </div>
+  );
+};
 
 /* ============================================================================================= */
 
@@ -341,19 +345,21 @@ export const SearchResultList = (props: SearchResultListProps): ReactElement | n
   return (
     // oxlint-disable react/jsx-no-useless-fragment
     <>
-      {result?.data?.map((data) => (
-        // oxlint-disable typescript/no-unsafe-assignment
-        <li key={data.id} {...props}>
-          <DialogClose isWrapper hideFocus>
-            {/* oxlint-disable typescript/no-unsafe-assignment */}
-            <Link href={data.url} title={data.title}>
-              <span className="link__label">{data.metaTitle ?? data.label}</span>
-              <span className="link__url">{data.url}</span>
-              <span className="link__confidence">Confidence: {data.score.toFixed(2)}%</span>
-            </Link>
-          </DialogClose>
-        </li>
-      ))}
+      {result?.data?.map((data) => {
+        return (
+          // oxlint-disable typescript/no-unsafe-assignment
+          <li key={data.id} {...props}>
+            <DialogClose isWrapper hideFocus>
+              {/* oxlint-disable typescript/no-unsafe-assignment */}
+              <Link href={data.url} title={data.title}>
+                <span className="link__label">{data.metaTitle ?? data.label}</span>
+                <span className="link__url">{data.url}</span>
+                <span className="link__confidence">Confidence: {data.score.toFixed(2)}%</span>
+              </Link>
+            </DialogClose>
+          </li>
+        );
+      })}
     </>
   );
 };
@@ -367,12 +373,14 @@ export type SearchCloseButtonProps = {
 export const SearchCloseButton = ({
   children,
   ...rest
-}: SearchCloseButtonProps): ReturnType<typeof DialogClose> => (
-  <DialogClose hideCloseButton={false} render={<Button variant="ghost" />} {...rest}>
-    {children}
-    <span className="screen-reader">close search popup</span>
-  </DialogClose>
-);
+}: SearchCloseButtonProps): ReturnType<typeof DialogClose> => {
+  return (
+    <DialogClose hideCloseButton={false} render={<Button variant="ghost" />} {...rest}>
+      {children}
+      <span className="screen-reader">close search popup</span>
+    </DialogClose>
+  );
+};
 
 /* ============================================================================================= */
 

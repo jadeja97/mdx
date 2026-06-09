@@ -1,3 +1,4 @@
+import type { PackageVersion } from "@jadeja/ts/types/util";
 import type { NextMDXOptions } from "@next/mdx";
 import type { MDXComponents } from "mdx/types";
 import type { NextConfig } from "next";
@@ -13,7 +14,7 @@ export interface Constants {
    *
    * keep this updated to invalidate old search index cache
    */
-  VERSION: `${number}.${number}.${number}${`-${string}.${number}` | ""}` | number;
+  VERSION: PackageVersion | number;
 
   /**
    * the site url (domain)
@@ -140,7 +141,7 @@ export interface DocsConfig {
 export type RequiredConstants = Pick<Constants, "DEV" | "PROD" | "SITE_URL" | "VERSION">;
 export type OptionalConstants = Partial<Omit<Constants, keyof RequiredConstants>>;
 
-export type UserConfig = Omit<DocsConfig, "getNextConfig" | "getWebpackConfig"> & {
+export type UserConfig = Omit<DocsConfig, "getNextConfig" | "getWebpackConfig" | "constants"> & {
   analytics?: Partial<Analytics>;
   constants: RequiredConstants & OptionalConstants;
   mdxConfig?: NextMDXOptions;

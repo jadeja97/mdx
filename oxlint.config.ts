@@ -1,14 +1,11 @@
-import { next } from "@jadeja/ts/configs/oxlint";
+import oxlintNext from "@jadeja/ts/configs/oxlint/next";
 import { defineConfig } from "oxlint";
 
-import type { OxlintConfig } from "@jadeja/ts/configs/oxlint/types";
+import type { OxlintConfig } from "oxlint";
 
 /* ============================================================================================= */
 
-const oxlintConfig: OxlintConfig = defineConfig({
-  ...next,
-  rules: { ...next.rules, "eslint/no-undefined": "off", "import/prefer-default-export": "off" },
-});
+const oxlintConfig: OxlintConfig = defineConfig({ ...oxlintNext });
 
 /* ============================================================================================= */
 

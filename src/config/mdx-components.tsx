@@ -19,12 +19,24 @@ export const HTMLElements: MDXComponents = {
   a: Link,
 
   /* headings */
-  h1: (props: ComponentProps<"h1">) => <Headings {...props} as="h1" />,
-  h2: (props: ComponentProps<"h2">) => <Headings {...props} as="h2" />,
-  h3: (props: ComponentProps<"h3">) => <Headings {...props} as="h3" />,
-  h4: (props: ComponentProps<"h4">) => <Headings {...props} as="h4" />,
-  h5: (props: ComponentProps<"h5">) => <Headings {...props} as="h5" />,
-  h6: (props: ComponentProps<"h6">) => <Headings {...props} as="h6" />,
+  h1: (props: ComponentProps<"h1">) => {
+    return <Headings {...props} as="h1" />;
+  },
+  h2: (props: ComponentProps<"h2">) => {
+    return <Headings {...props} as="h2" />;
+  },
+  h3: (props: ComponentProps<"h3">) => {
+    return <Headings {...props} as="h3" />;
+  },
+  h4: (props: ComponentProps<"h4">) => {
+    return <Headings {...props} as="h4" />;
+  },
+  h5: (props: ComponentProps<"h5">) => {
+    return <Headings {...props} as="h5" />;
+  },
+  h6: (props: ComponentProps<"h6">) => {
+    return <Headings {...props} as="h6" />;
+  },
 
   /* code */
   // pre: don't use `pre` custom component
@@ -32,7 +44,9 @@ export const HTMLElements: MDXComponents = {
 
   /* list */
   ul: List,
-  ol: (props: OLProps) => <List {...props} ordered />,
+  ol: (props: OLProps) => {
+    return <List {...props} ordered />;
+  },
 
   /* table */
   table: TableComposed,
