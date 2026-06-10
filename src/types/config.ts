@@ -94,7 +94,9 @@ export type AuthorLinks = Record<
   string,
   {
     name: string;
-    url: string;
+    link: string;
+    location: string;
+    title: string;
   }
 >;
 

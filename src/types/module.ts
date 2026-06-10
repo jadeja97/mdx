@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import type { Content } from "@/lib/content";
-import type { FileInfo, Metadata, Neighbours, TOC } from "@/types/content";
+import type { FileInfo, Neighbours, TOC } from "@/types/content";
 
 /* ============================================================================================= */
 
@@ -12,7 +12,6 @@ export interface LoadModuleOptions {
 
 export interface Module {
   MDXComponent: FC;
-  metadata: Metadata;
   toc: TOC[];
 }
 

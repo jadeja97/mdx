@@ -7,9 +7,11 @@ import type { DocsConfig } from "@/types/config";
   CONTENT
 ================================================================================================ */
 
-export type ContentOptions = Pick<DocsConfig, "trailingSlash"> & {
+export interface ContentOptions {
+  authors: DocsConfig["links"]["authors"];
   search: CreateSearchInstanceOptions;
-};
+  trailingSlash: DocsConfig["trailingSlash"];
+}
 
 /* ================================================================================================
   PATHS
@@ -98,9 +100,7 @@ export interface Meta {
 
 export type FullMeta = (FileMeta | FolderMeta) & {
   id: number;
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
+  frontMatter: FrontMatter;
   content?: string;
 };
 
@@ -112,11 +112,14 @@ export interface AddMetaOptions {
   reservedIndex?: number;
 }
 
-export type Metadata = {
+export interface FrontMatter {
   title: string;
   description: string;
   keywords: string;
-} & Record<string, string>;
+  publishedAt: string;
+  lastModifiedAt: string;
+  author: string;
+}
 
 /* ================================================================================================
   FILE

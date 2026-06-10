@@ -1,7 +1,6 @@
 /* remark plugins */
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 import { remarkCodeMeta } from "@/markdown/plugins/remark-code-meta";
 import { remarkTOC } from "@/markdown/plugins/remark-toc";
@@ -19,14 +18,7 @@ import type { NextMDXOptions } from "@next/mdx";
 export const mdxConfig: NextMDXOptions = {
   options: {
     /* process markdown */
-    remarkPlugins: [
-      remarkFrontmatter,
-      // named export `metadata` from `.mdx` files
-      [remarkMdxFrontmatter, { name: "metadata" }],
-      remarkGfm,
-      remarkCodeMeta,
-      remarkTOC,
-    ],
+    remarkPlugins: [remarkFrontmatter, remarkGfm, remarkCodeMeta, remarkTOC],
 
     /* process html */
     rehypePlugins: [rehypeSlug],

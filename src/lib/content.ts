@@ -1,13 +1,15 @@
 // oxlint-disable eslint/max-lines
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { cwd } from "node:process";
 
-import { throwError } from "@jadeja/ts/lib/logger";
+import { log, throwError } from "@jadeja/ts/lib/logger";
 import { Singleton } from "@jadeja/ts/lib/singleton";
 import frontMatter from "front-matter";
+import grayMatter from "gray-matter";
 
+import { getLastModified } from "@/lib/last-modified";
 import { Search } from "@/lib/search";
 
 import type {
@@ -20,10 +22,10 @@ import type {
   FileMeta,
   Folder,
   FolderMeta,
+  FrontMatter,
   FullMeta,
   List,
   Meta,
-  Metadata,
   Neighbours,
   Paths,
   Slugs,
@@ -330,7 +332,7 @@ export class Content {
     return folderMeta;
   }
 
-  private addMeta({ PATH, slugs, file, meta, reservedIndex = -1 }: AddMetaOptions) {
+  private addMeta({ PATH, slugs, file, meta, reservedIndex = -1 }: AddMetaOptions): void {
     //
     let index = this.getLength();
 
@@ -346,10 +348,10 @@ export class Content {
     // NOTE: no leading slash
     const relativePath = relative(this.paths.PATH, PATH);
 
-    const fullMeta: FullMeta = { ...meta, id: index };
-
     // get data for search
     const filePATH = resolve(PATH, file);
+
+    const fullMeta = { ...meta, id: index } as FullMeta;
 
     try {
       //
@@ -357,18 +359,36 @@ export class Content {
 
       if (fileContent) {
         //
-        const { attributes, body } = frontMatter<Metadata>(fileContent);
+        const { attributes, body } = frontMatter<Partial<FrontMatter>>(fileContent);
+
+        const fields = attributes;
+
+        if (!fields.title || !fields.description || !fields.keywords || !fields.author) {
+          return throwError(
+            `Missing frontmatter [title, description, keywords, author] field(s) in ${filePATH} with index ${index}`,
+          );
+        }
+
+        if (!fields.publishedAt || !fields.lastModifiedAt) {
+          Object.assign(fields, {
+            publishedAt: fields.publishedAt ?? new Date().toISOString(),
+            lastModifiedAt: fields.lastModifiedAt ?? getLastModified(filePATH),
+          });
+
+          const newFileContent = grayMatter.stringify(body, fields);
+          writeFileSync(filePATH, newFileContent, "utf8");
+
+          log(`Frontmatter updated :: ${filePATH}`);
+        }
 
         Object.assign(fullMeta, {
-          metaTitle: attributes.title,
-          metaDescription: attributes.description,
-          metaKeywords: attributes.keywords,
+          frontMatter: fields,
           content: body,
         });
       }
       //
-    } catch {
-      throwError(`Error: process search data at ${filePATH} with index ${index}`);
+    } catch (error) {
+      return throwError(error);
     }
 
     // get index from slug - O(1)
