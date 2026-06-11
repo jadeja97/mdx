@@ -25,10 +25,10 @@ import type { SearchError, SearchQueryResult, UseSearchOptions } from "@/hooks/u
 
 /* ============================================================================================= */
 
-// oxlint-disable react/only-export-components
+// oxlint-disable-next-line react/only-export-components
 export const SearchContext = createContext<SearchRootChildParams | null>(null);
 
-// oxlint-disable react/only-export-components
+// oxlint-disable-next-line react/only-export-components
 export const useSearchContext = () => {
   const context = useContext(SearchContext);
 
@@ -76,7 +76,7 @@ export const SearchRoot = ({
 
   useEffect(() => {
     if (!ready) {
-      // oxlint-disable typescript/no-floating-promises
+      // oxlint-disable-next-line typescript/no-floating-promises
       initialize();
     }
   }, [ready, initialize]);
@@ -92,14 +92,14 @@ export const SearchRoot = ({
           const queryResult = await query(text);
           setResult(queryResult);
         };
-        // oxlint-disable typescript/no-floating-promises
+        // oxlint-disable-next-line typescript/no-floating-promises
         fn();
       });
     });
   };
 
   return (
-    // oxlint-disable react/jsx-no-constructed-context-values
+    // oxlint-disable-next-line react/jsx-no-constructed-context-values
     <SearchContext.Provider value={{ search, ready, handleSearch, error, result }}>
       <div className={cls("search", className)} {...rest}>
         {children}
@@ -343,11 +343,11 @@ export const SearchResultList = (props: SearchResultListProps): ReactElement | n
   const { result } = useSearchContext();
 
   return (
-    // oxlint-disable react/jsx-no-useless-fragment
+    // oxlint-disable-next-line react/jsx-no-useless-fragment
     <>
       {result?.data?.map((data) => {
         return (
-          // oxlint-disable typescript/no-unsafe-assignment
+          // oxlint-disable-next-line typescript/no-unsafe-assignment
           <li key={data.id} {...props}>
             <DialogClose isWrapper hideFocus>
               {/* oxlint-disable typescript/no-unsafe-assignment */}

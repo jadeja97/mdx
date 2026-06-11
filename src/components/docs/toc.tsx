@@ -43,7 +43,7 @@ export const TOC = ({ toc, isMobile = false }: TOCProps): ReactElement<HTMLDivEl
     // explored the `mutationObserver`, but this is the simplest way.
     initialize();
 
-    // oxlint-disable react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // scroll TOC container to make active links visible (if offscreen)

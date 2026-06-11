@@ -69,7 +69,7 @@ export const remarkTOC = () => {
                     id: { type: "Identifier", name: "toc" },
                     init: {
                       type: "Literal",
-                      // oxlint-disable typescript/no-unsafe-assignment
+                      // oxlint-disable-next-line typescript/no-unsafe-assignment
                       value: JSON.parse(safeStr),
                       raw: safeStr,
                     },

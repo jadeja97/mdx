@@ -25,7 +25,7 @@ export const Client = ({ children }: ClientProps): ReactNode => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // oxlint-disable react-hooks-js/set-state-in-effect
+    // oxlint-disable-next-line react-hooks-js/set-state-in-effect
     setMounted(true);
   }, []);
 

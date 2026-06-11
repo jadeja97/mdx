@@ -21,8 +21,8 @@ export const remarkCodeMeta = () => {
 
       // expose props to `code` element
       // hProperties passed as serialized
-      // oxlint-disable typescript/no-unsafe-assignment
       // @ts-expect-error  type issue
+      // oxlint-disable-next-line typescript/no-unsafe-assignment
       node.data.hProperties = {
         // @ts-expect-error  type issue
         ...node.data.hProperties,

@@ -33,7 +33,7 @@ export const useGetTopOffset = () => {
   useEffect(() => {
     // call on first mount
     if (!topOffset) {
-      // oxlint-disable react-hooks-js/set-state-in-effect
+      // oxlint-disable-next-line react-hooks-js/set-state-in-effect
       handleResize();
     }
 
@@ -42,7 +42,7 @@ export const useGetTopOffset = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-    // oxlint-disable react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return topOffset;

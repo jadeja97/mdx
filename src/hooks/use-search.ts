@@ -75,10 +75,10 @@ export const useSearch = ({
         cache: DEV ? "no-store" : "force-cache",
       });
 
-      // oxlint-disable typescript/no-unsafe-assignment
+      // oxlint-disable-next-line typescript/no-unsafe-assignment
       const data = await res.json();
 
-      // oxlint-disable typescript/no-unsafe-member-access
+      // oxlint-disable-next-line typescript/no-unsafe-member-access
       instance.current = MiniSearch.loadJS(data.index as AsPlainObject, {
         fields: SEARCH_INDEX_FIELDS,
         storeFields: SEARCH_INDEX_RETURN_FIELDS,
@@ -89,9 +89,9 @@ export const useSearch = ({
 
       setReady(true);
 
-      // oxlint-disable typescript/no-explicit-any
+      // oxlint-disable-next-line typescript/no-explicit-any
     } catch (error: any) {
-      // oxlint-disable typescript/no-unsafe-member-access
+      // oxlint-disable-next-line typescript/no-unsafe-member-access
       if (error.name === "AbortError") {
         return;
       }
@@ -148,7 +148,7 @@ export const useSearch = ({
       };
     }
 
-    // oxlint-disable eslint/no-useless-return, typescript/consistent-return
+    // oxlint-disable-next-line eslint/no-useless-return, typescript/consistent-return
     return;
   };
 

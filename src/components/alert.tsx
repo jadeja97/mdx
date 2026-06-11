@@ -14,7 +14,7 @@ import type { VariantProps } from "@/lib/dom/utils";
 
 /* ============================================================================================= */
 
-// oxlint-disable react/only-export-components
+// oxlint-disable-next-line react/only-export-components
 export const alertVariants = cva("alert", {
   variants: {
     //
@@ -82,7 +82,7 @@ export const AlertRoot = ({
 
 export type IconProps = ComponentProps<"svg"> & Pick<VariantProps<typeof alertVariants>, "variant">;
 
-// oxlint-disable react/only-export-components
+// oxlint-disable-next-line react/only-export-components
 export const getIcon = <T,>(variant: T): ((props: SVGProps) => SVGEl) => {
   switch (variant) {
     case "info":
@@ -99,9 +99,10 @@ export const getIcon = <T,>(variant: T): ((props: SVGProps) => SVGEl) => {
 };
 
 export const AlertIcon = ({ variant, ...rest }: IconProps): SVGEl => {
-  // oxlint-disable react-hooks-js/static-components
+  //
   const Component = getIcon(variant);
 
+  // oxlint-disable-next-line react-hooks-js/static-components
   return <Component {...rest} />;
 };
 

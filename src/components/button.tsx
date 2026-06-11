@@ -8,7 +8,7 @@ import type { VariantProps } from "@/lib/dom/utils";
 
 /* ============================================================================================= */
 
-// oxlint-disable react/only-export-components
+// oxlint-disable-next-line react/only-export-components
 export const buttonVariants = cva("btn", {
   variants: {
     variant: {

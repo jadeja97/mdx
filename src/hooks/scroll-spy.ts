@@ -97,7 +97,7 @@ export const useScrollSpy = ({ tocIds, scrollContainer, offset }: ScrollSpyOptio
     return () => {
       disconnect();
     };
-    // oxlint-disable react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [start, tocIds, scrollContainer, offset]);
 
   return {

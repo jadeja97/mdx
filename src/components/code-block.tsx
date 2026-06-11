@@ -56,11 +56,14 @@ export const CodeBlockRoot = (
 ): ReactElement<HTMLElement | HTMLDivElement> => {
   //
   if (!props.lang) {
-    // oxlint-disable eslint/no-unused-vars
+    // don't need title for code
+    // oxlint-disable-next-line eslint/no-unused-vars
     const { lang, title, children, className, ...rest } = props;
     return <code {...rest}>{children}</code>;
   }
 
+  // don't need title for div
+  // oxlint-disable-next-line eslint/no-unused-vars
   const { lang, title, children, className, ...rest } = props;
 
   return (

@@ -75,7 +75,7 @@ export const InitialLoad = ({ SITE_URL }: InitialLoadProps): ReactElement<HTMLSc
   return (
     <script
       suppressHydrationWarning
-      // oxlint-disable react/no-danger
+      // oxlint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
         __html: `
 				(function(pathname, addDataAttrToHTML) {

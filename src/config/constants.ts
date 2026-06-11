@@ -32,19 +32,19 @@ export const constants: Constants = {
    *
    * prod: `${SEARCH_INDEX_KEY}-v-${VERSION}.json`
    */
-  // oxlint-disable node/no-process-env
+  // oxlint-disable-next-line node/no-process-env
   SEARCH_INDEX_FILE_NAME: `search-index-v-${process.env.NODE_ENV === "development" ? "dev" : "0.0.0"}.json`,
 
   /**
    * `true` if environment is "development"
    */
-  // oxlint-disable node/no-process-env
+  // oxlint-disable-next-line node/no-process-env
   DEV: process.env.NODE_ENV === "development",
 
   /**
    * `true` if environment is "production"
    */
-  // oxlint-disable node/no-process-env
+  // oxlint-disable-next-line node/no-process-env
   PROD: process.env.NODE_ENV === "production",
 
   /**

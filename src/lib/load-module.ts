@@ -28,7 +28,7 @@ export const loadModule = async ({ content, slugs }: LoadModuleOptions): LoadMod
 
   try {
     // dynamically import `.mdx` file as module
-    // oxlint-disable typescript/no-unsafe-assignment
+    // oxlint-disable-next-line typescript/no-unsafe-assignment
     const dynamicModule: Omit<Module, "MDXComponent"> & {
       default: FC;
     } = await import(`@/content/${content.paths.dir}/${filePath}`);
