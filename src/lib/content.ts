@@ -363,9 +363,9 @@ export class Content {
 
         const fields = attributes;
 
-        if (!fields.title || !fields.description || !fields.keywords || !fields.author) {
+        if (!fields.title || !fields.description || !fields.keywords || !fields.authors) {
           return throwError(
-            `Missing frontmatter [title, description, keywords, author] field(s) in ${filePATH} with index ${index}`,
+            `Missing frontmatter [title, description, keywords, authors] field(s) in ${filePATH} with index ${index}`,
           );
         }
 

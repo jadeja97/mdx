@@ -100,13 +100,68 @@ export type AuthorLinks = Record<
   }
 >;
 
+export interface App {
+  name: string;
+  description: string;
+  keywords: string[];
+  publisher: string;
+  creator: Author["name"];
+  locale: string;
+  country: string;
+  home: {
+    title: {
+      default: App["name"];
+      template: `%s | ${App["name"]}`;
+    };
+    alternates: {
+      canonical: "/";
+      types: {
+        "application/rss+xml": `https://${string}/rss.xml`;
+        "text/x-sitemap+xml": `https://${string}/sitemap.xml`;
+        "text/plain": `https://${string}/llms.txt`;
+      };
+    };
+  };
+  images: {
+    og: {
+      url: string;
+      width: 1200;
+      height: 630;
+    };
+  };
+  x: {
+    site: `@${string}`;
+    siteId: string;
+  };
+}
+
+export interface Author {
+  name: string;
+  link: `https://${string}`;
+  location: string;
+  jobTitle: string;
+  x: {
+    creator: `@${string}`;
+    creatorId: string;
+  };
+  socials: Record<
+    string,
+    {
+      label: string;
+      link: `https://${string}`;
+      icon?: (props: SVGProps) => SVGEl;
+    }
+  >;
+}
+
 export interface DocsConfig {
+  app: App;
+  authors: Record<string, Author>;
   analytics?: Analytics;
   constants: Constants;
   links: {
     navigations: NavLinks;
     socials: SocialLinks;
-    authors: AuthorLinks;
   };
   mdxConfig: NextMDXOptions;
   mdxComponents?: {

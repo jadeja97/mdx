@@ -8,7 +8,7 @@ import type { DocsConfig } from "@/types/config";
 ================================================================================================ */
 
 export interface ContentOptions {
-  authors: DocsConfig["links"]["authors"];
+  authors: DocsConfig["authors"];
   search: CreateSearchInstanceOptions;
   trailingSlash: DocsConfig["trailingSlash"];
 }
@@ -115,10 +115,10 @@ export interface AddMetaOptions {
 export interface FrontMatter {
   title: string;
   description: string;
-  keywords: string;
+  keywords: string[];
   publishedAt: string;
   lastModifiedAt: string;
-  author: string;
+  authors: (keyof DocsConfig["authors"])[];
 }
 
 /* ================================================================================================
