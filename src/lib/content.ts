@@ -9,7 +9,7 @@ import { Singleton } from "@jadeja/ts/lib/singleton";
 import frontMatter from "front-matter";
 import grayMatter from "gray-matter";
 
-import { getLastModified } from "@/lib/last-modified";
+import { getLastModified } from "@/lib/date-time";
 import { Search } from "@/lib/search";
 
 import type {

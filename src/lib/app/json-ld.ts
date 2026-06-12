@@ -1,3 +1,4 @@
+import { removeMilliSeconds } from "@/lib/date-time";
 import { cleanURL } from "@/lib/dom/utils";
 
 import type { App, Author, DocsConfig } from "@/types/config";
@@ -32,39 +33,52 @@ export const getAuthorJSON_LD = ({
 /* ============================================================================================= */
 
 export interface ArticleJSON_LDOptions {
-  author: Author;
+  owner: Author;
   SITE_URL: DocsConfig["constants"]["SITE_URL"];
   url: string;
   frontMatter: FrontMatter;
+  trailingSlash: boolean | undefined;
 }
 
-export const articleJSON_LD = ({ author, SITE_URL, url, frontMatter }: ArticleJSON_LDOptions) => {
+export const articleJSON_LD = ({
+  owner,
+  SITE_URL,
+  url,
+  frontMatter,
+  trailingSlash,
+}: ArticleJSON_LDOptions) => {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
-    url: cleanURL(SITE_URL, url, false),
+    url: cleanURL(SITE_URL, url, trailingSlash),
     headline: frontMatter.title,
     description: frontMatter.description,
-    datePublished: `${frontMatter.publishedAt.split(".")[0]}Z`,
-    dateModified: `${frontMatter.lastModifiedAt.split(".")[0]}Z`,
-    author: getAuthorJSON_LD(author),
+    datePublished: removeMilliSeconds(frontMatter.publishedAt),
+    dateModified: removeMilliSeconds(frontMatter.lastModifiedAt),
+    author: getAuthorJSON_LD(owner),
   };
 };
 
 /* ============================================================================================= */
 
 export interface WebsiteJSON_LDOptions {
-  author: Author;
+  owner: Author;
   SITE_URL: DocsConfig["constants"]["SITE_URL"];
   appName: App["name"];
+  trailingSlash: boolean | undefined;
 }
 
-export const websiteJSON_LD = ({ author, SITE_URL, appName }: WebsiteJSON_LDOptions) => {
+export const websiteJSON_LD = ({
+  owner,
+  SITE_URL,
+  appName,
+  trailingSlash,
+}: WebsiteJSON_LDOptions) => {
   return {
     "@context": "https://schema.org",
     "@type": "Website",
-    url: cleanURL(SITE_URL, "", false),
+    url: cleanURL(SITE_URL, "", trailingSlash),
     name: appName,
-    author: getAuthorJSON_LD(author),
+    author: getAuthorJSON_LD(owner),
   };
 };

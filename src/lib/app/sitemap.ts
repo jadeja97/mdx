@@ -1,5 +1,5 @@
+import { getLastModified, removeMilliSeconds } from "@/lib/date-time";
 import { cleanURL } from "@/lib/dom/utils";
-import { getLastModified } from "@/lib/last-modified";
 
 import type { MetadataRoute } from "next";
 
@@ -72,7 +72,7 @@ export const createSiteMapEntry = ({
 
   return {
     url: cleanURL(SITE_URL, url, trailingSlash),
-    lastModified: `${lastModified.split(".")[0]}Z`,
+    lastModified: removeMilliSeconds(lastModified),
     changeFrequency,
     priority,
   };

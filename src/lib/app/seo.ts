@@ -1,22 +1,25 @@
+import { getAuthors } from "@/lib/app/authors";
 import { articleJSON_LD, websiteJSON_LD } from "@/lib/app/json-ld";
-import { websiteOG } from "@/lib/app/og";
+import { articleOG, websiteOG } from "@/lib/app/og";
+import { x } from "@/lib/app/x";
+import { cleanURL } from "@/lib/dom/utils";
 
 import type { Metadata } from "next";
 
 import type { App, DocsConfig } from "@/types/config";
-import type { FrontMatter, Paths } from "@/types/content";
+import type { FrontMatter } from "@/types/content";
 
 /* ============================================================================================= */
 
 export interface GetPageSEOOptions {
-  authors: Partial<DocsConfig["authors"]>;
+  authors: DocsConfig["authors"];
   app: App;
   url: string;
   SITE_URL: DocsConfig["constants"]["SITE_URL"];
   canonicalURL: string;
   frontMatter: FrontMatter;
-  filePath: Paths["path"];
   markdown?: `https://${string}`;
+  trailingSlash: boolean | undefined;
 }
 
 export const getPageSEO = ({
@@ -27,58 +30,45 @@ export const getPageSEO = ({
   markdown,
   canonicalURL,
   frontMatter,
+  trailingSlash,
 }: GetPageSEOOptions): Metadata => {
   //
-  // oxlint-disable-next-line typescript/no-non-null-assertion
-  const owner = authors[frontMatter.authors[0]]!;
+  const pageAuthors = getAuthors({ authorsList: authors, authors: frontMatter.authors });
 
   return {
     title: frontMatter.title,
     description: frontMatter.description,
     keywords: frontMatter.keywords,
 
-    authors: frontMatter.authors.map((author) => {
-      return {
-        name: authors[author]?.name,
-        url: authors[author]?.link,
-      };
-    }),
+    authors: pageAuthors.seoRootAuthors,
 
     alternates: {
-      canonical: canonicalURL,
+      canonical: cleanURL(SITE_URL, canonicalURL, trailingSlash),
       types: {
         ...(markdown && { "text/markdown": markdown }),
       },
     },
 
-    openGraph: {
-      title: frontMatter.title,
-      description: frontMatter.description,
+    openGraph: articleOG({
+      app,
+      frontMatter,
+      owner: pageAuthors.owner,
+      SITE_URL,
+      trailingSlash,
       url,
-      type: "article",
-      publishedTime: `${frontMatter.publishedAt.split(".")[0]}Z`,
-      modifiedTime: `${frontMatter.lastModifiedAt.split(".")[0]}Z`,
-      authors: owner.name,
-      siteName: app.name,
-      locale: app.locale,
-      countryName: app.country,
-      images: [app.images.og],
-    },
+    }),
 
-    twitter: {
-      title: frontMatter.title,
-      description: frontMatter.description,
-      card: "summary_large_image",
-      images: [app.images.og.url],
-      site: app.x.site,
-      siteId: app.x.siteId,
-      creator: owner.x.creator,
-      creatorId: owner.x.creatorId,
-    },
+    twitter: x({ app, frontMatter, owner: pageAuthors.owner }),
 
     other: {
       "application/ld+json": JSON.stringify(
-        articleJSON_LD({ author: owner, SITE_URL, url, frontMatter }),
+        articleJSON_LD({
+          owner: pageAuthors.owner,
+          SITE_URL,
+          url,
+          frontMatter,
+          trailingSlash,
+        }),
       ),
     },
   };
@@ -102,7 +92,7 @@ export const getHomePageSEO = ({
   trailingSlash = false,
 }: GetHomePageSEOOptions): Metadata => {
   //
-  const owner = authors[frontMatter.authors[0]];
+  const pageAuthors = getAuthors({ authorsList: authors, authors: frontMatter.authors });
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -116,29 +106,20 @@ export const getHomePageSEO = ({
 
     alternates: app.home.alternates,
 
-    authors: frontMatter.authors.map((author) => {
-      return {
-        name: authors[author]?.name,
-        url: authors[author]?.link,
-      };
-    }),
+    authors: pageAuthors.seoRootAuthors,
 
     openGraph: websiteOG({ app, SITE_URL, trailingSlash, frontMatter }),
 
-    twitter: {
-      title: frontMatter.title,
-      description: frontMatter.description,
-      card: "summary_large_image",
-      images: [app.images.og.url],
-      site: app.x.site,
-      siteId: app.x.siteId,
-      creator: owner.x.creator,
-      creatorId: owner.x.creatorId,
-    },
+    twitter: x({ app, frontMatter, owner: pageAuthors.owner }),
 
     other: {
       "application/ld+json": JSON.stringify(
-        websiteJSON_LD({ author: owner, SITE_URL, appName: app.name }),
+        websiteJSON_LD({
+          owner: pageAuthors.owner,
+          SITE_URL,
+          appName: app.name,
+          trailingSlash,
+        }),
       ),
     },
   };

@@ -1,4 +1,7 @@
+import { removeMilliSeconds } from "@/lib/date-time";
 import { cleanURL } from "@/lib/dom/utils";
+
+import type { Metadata } from "next";
 
 import type { App, Author } from "@/types/config";
 import type { FrontMatter } from "@/types/content";
@@ -10,20 +13,30 @@ export interface ArticleOGOptions {
   app: App;
   url: string;
   frontMatter: FrontMatter;
+  trailingSlash: boolean | undefined;
+  SITE_URL: string;
 }
 
-export const articleOG = ({ owner, app, url, frontMatter }: ArticleOGOptions) => {
+export const articleOG = ({
+  owner,
+  app,
+  SITE_URL,
+  url,
+  frontMatter,
+  trailingSlash,
+}: ArticleOGOptions): Metadata["openGraph"] => {
   return {
     title: frontMatter.title,
     description: frontMatter.description,
-    url,
+    url: cleanURL(SITE_URL, url, trailingSlash),
     type: "article",
-    publishedTime: `${frontMatter.publishedAt.split(".")[0]}Z`,
-    modifiedTime: `${frontMatter.lastModifiedAt.split(".")[0]}Z`,
+    publishedTime: removeMilliSeconds(frontMatter.publishedAt),
+    modifiedTime: removeMilliSeconds(frontMatter.lastModifiedAt),
     authors: owner.name,
     siteName: app.name,
     locale: app.locale,
     images: [app.images.og],
+    countryName: app.country,
   };
 };
 
@@ -36,7 +49,12 @@ export interface WebsiteOGOptions {
   trailingSlash: boolean | undefined;
 }
 
-export const websiteOG = ({ app, SITE_URL, trailingSlash, frontMatter }: WebsiteOGOptions) => {
+export const websiteOG = ({
+  app,
+  SITE_URL,
+  trailingSlash,
+  frontMatter,
+}: WebsiteOGOptions): Metadata["openGraph"] => {
   return {
     title: frontMatter.title,
     description: frontMatter.description,
