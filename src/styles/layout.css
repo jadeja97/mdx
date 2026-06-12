@@ -31,7 +31,7 @@ body {
 
   /* set scroll position (useful when using sticky layouts) */
   scroll-padding-top: calc(
-    var(--banner, 0px) + var(--header) + var(--content-nav-mobile, 0px) + var(--docs-main-pt, 0px)
+    var(--banner, 0px) + var(--header) + var(--content-nav-mobile, 0px) + var(--main-pt, 0px)
   );
 }
 

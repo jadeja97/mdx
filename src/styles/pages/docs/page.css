@@ -27,7 +27,7 @@
   @flex flow-col;
   @space px-4 pb-8;
 
-  padding-top: var(--docs-main-pt, 0px);
+  padding-top: var(--main-pt, 0px);
 
   @screen md {
     @space px-6;
@@ -50,7 +50,8 @@
   /* fill the available space */
   @flex grow;
 
-  @space pb-8;
+  /* without `pt-1`, h1 outline on top side is not visible */
+  @space pb-8 pt-1;
   @layout overflow-x-hidden;
 }
 

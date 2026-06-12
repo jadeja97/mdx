@@ -4,7 +4,7 @@
 
 html[data-root="docs"] {
   /* /docs `main` element's top padding */
-  --docs-main-pt: theme(spacing|spacing-4);
+  --main-pt: theme(spacing|spacing-4);
 
   /* content mobile navigation sticky layout (below header) */
   --content-nav-mobile: theme(spacing|spacing-9);
