@@ -14,7 +14,7 @@ import { Search } from "@/lib/search";
 
 import type {
   AddMetaOptions,
-  ContentOptions,
+  ContentBaseOptions,
   CreateFileMetaOptions,
   CreateFolderMetaOptions,
   CreateTreeOptions,
@@ -48,34 +48,38 @@ import type {
  * - `instance.getFileInfo`
  * - `instance.getNeighbours`
  */
-export class Content {
+// oxlint-disable-next-line typescript/ban-types, typescript/no-empty-object-type
+export class Content<U extends Record<string, unknown> = {}> {
   //
   public paths!: Paths;
   private slugs!: Slugs;
   private list!: List;
   private tree!: Tree;
   private search!: Search & Singleton;
-  private options!: ContentOptions;
+  private options!: ContentBaseOptions & U;
 
-  public static create(dir: string, options: ContentOptions) {
-    return new this().init(dir, options);
+  public static create<U extends Record<string, unknown>>(
+    dir: string,
+    options: ContentBaseOptions & U,
+  ) {
+    // cast 'new this<U>()' to 'Content<U>' to help TS understand the instance type
+    const instance = new this<U>();
+
+    // perform the initialization
+    return instance.init(dir, options);
   }
 
-  private init(dir: string, options: ContentOptions) {
+  private init<T extends U>(dir: string, options: ContentBaseOptions & T) {
     //
     const paths = this.getPaths(dir);
 
-    const instance = Singleton.get<Content & Singleton>(paths.path);
+    const instance = Singleton.get<Content<U> & Singleton>(paths.path);
 
     const registerMethods = instance.registerMethods.bind(instance, this);
 
-    if (!instance.options) {
-      instance.options = options;
-    }
+    instance.options ??= options;
 
-    if (!instance.paths) {
-      instance.paths = paths;
-    }
+    instance.paths ??= paths;
 
     // register methods, so `this` would point to singleton instance and not this class
     registerMethods([

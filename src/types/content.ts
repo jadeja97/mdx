@@ -7,8 +7,7 @@ import type { DocsConfig } from "@/types/config";
   CONTENT
 ================================================================================================ */
 
-export interface ContentOptions {
-  authors: DocsConfig["authors"];
+export interface ContentBaseOptions {
   search: CreateSearchInstanceOptions;
   trailingSlash: DocsConfig["trailingSlash"];
 }
