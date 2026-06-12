@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 
 import { createInputEntries, viteLib as viteLibFn } from "@jadeja/ts/configs/vite/lib";
+import vitePluginCopyFolders from "@jadeja/ts/plugins/vite/copy-folders";
 import dts from "unplugin-dts/vite";
 import { defineConfig } from "vite";
 
@@ -64,6 +65,14 @@ const viteConfig = defineConfig({
       entryRoot: "src",
       outDirs: "dist",
     }),
+
+    //
+    vitePluginCopyFolders(import.meta.dirname, [
+      {
+        src: "./src/styles",
+        dest: "./dist/styles",
+      },
+    ]),
   ],
 });
 

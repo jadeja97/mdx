@@ -4,7 +4,7 @@ import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 /* ============================================================================================= */
 
-type FooterRootProps = {
+export type FooterRootProps = {
   children: ReactNode;
 } & ComponentProps<"div">;
 
@@ -22,10 +22,28 @@ export const FooterRoot = ({
 
 /* ============================================================================================= */
 
-type FooterProps = {
+export type FooterProps = {
   children: ReactNode;
 } & ComponentProps<"footer">;
 
 export const Footer = ({ children, ...rest }: FooterProps): ReactElement<HTMLElement> => {
   return <footer {...rest}>{children}</footer>;
+};
+
+/* ============================================================================================= */
+
+export type FooterCopyrightProps = {
+  children: ReactNode;
+} & ComponentProps<"small">;
+
+export const FooterCopyright = ({
+  children,
+  className,
+  ...rest
+}: FooterCopyrightProps): ReactElement<HTMLElement> => {
+  return (
+    <small className={cls("footer__copyright", className)} {...rest}>
+      {children}
+    </small>
+  );
 };

@@ -4,7 +4,7 @@ import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 /* ============================================================================================= */
 
-type BannerRootProps = {
+export type BannerRootProps = {
   children: ReactNode;
 } & ComponentProps<"div">;
 
@@ -22,7 +22,7 @@ export const BannerRoot = ({
 
 /* ============================================================================================= */
 
-type BannerProps = {
+export type BannerProps = {
   children: ReactNode;
 } & ComponentProps<"div">;
 

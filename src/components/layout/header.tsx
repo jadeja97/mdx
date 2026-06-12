@@ -4,7 +4,7 @@ import type { ComponentProps, ReactElement, ReactNode } from "react";
 
 /* ============================================================================================= */
 
-type HeaderRootProps = {
+export type HeaderRootProps = {
   children: ReactNode;
 } & ComponentProps<"div">;
 
@@ -22,7 +22,7 @@ export const HeaderRoot = ({
 
 /* ============================================================================================= */
 
-type HeaderProps = {
+export type HeaderProps = {
   children: ReactNode;
 } & ComponentProps<"header">;
 
