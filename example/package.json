@@ -1,0 +1,84 @@
+{
+  "name": "shilpcss-docs",
+  "description": "Shilp CSS documentation",
+  "version": "1.0.0-alpha.12",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "cleanup": "tsx ./scripts/cleanup.ts",
+    "dev": "pnpm cleanup && next dev --webpack",
+    "check": "tsc && oxfmt --check --disable-nested-config && oxlint --disable-nested-config",
+    "fix": "oxlint --fix --disable-nested-config && oxfmt --disable-nested-config",
+    "build:nc": "pnpm cleanup && next build --webpack",
+    "build": "pnpm build:nc"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.3.0",
+    "@jadeja/docs": "workspace:*",
+    "@jadeja/ts": "1.0.0-alpha.4",
+    "@next/third-parties": "^16.2.6",
+    "next": "^16.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "^16.2.2",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/webpack": "^5.28.5",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "browserslist": "^4.28.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "lightningcss": "^1.32.0",
+    "purgecss": "^8.0.0",
+    "sass": "^1.99.0",
+    "shilpcss": "workspace:*",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3",
+    "webpack-sources": "^3.3.4"
+  },
+  "homepage": "https://shilpcss.com/",
+  "bugs": "https://github.com/JadejaHQ/shilpcss/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Pradipsinh Jadeja",
+    "email": "224366804+jadeja97@users.noreply.github.com",
+    "url": "https://x.com/jadeja97_"
+  },
+  "contributors": [
+    {
+      "name": "Pradipsinh Jadeja",
+      "email": "224366804+jadeja97@users.noreply.github.com",
+      "url": "https://x.com/jadeja97_"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JadejaHQ/shilpcss.git",
+    "directory": "apps/docs"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10",
+    "turbo": ">=2",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "bun": "please-use-pnpm"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=10",
+      "onFail": "error"
+    }
+  }
+}

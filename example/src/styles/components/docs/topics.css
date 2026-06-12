@@ -1,0 +1,42 @@
+@import "@jadeja/docs/styles/components/docs/topics";
+
+/* ============================================================================================= */
+
+/*  */
+
+/* ================================================================================================
+	DOCS TOPICS
+================================================================================================ */
+
+.topics {
+  /*  */
+
+  /* highlight intent and mixins in navigation (ux) */
+  [data-folder-page^="@"] > a,
+  [data-folder="mixins"] li ~ li > a {
+    /*  */
+    @match not("[data-active]") {
+      @layout opacity-100;
+      @text color-secondary thick-600;
+
+      @theme dark {
+        @text color-secondary-400;
+      }
+    }
+  }
+}
+
+/* ============================================================================================= */
+
+[data-folder-page] ul {
+  a {
+    @position is-relative;
+
+    @self before {
+      content: "-";
+
+      @position is-absolute top-1/2;
+      @adjust preset -move-y-1/2 -move-x-5;
+    }
+  }
+}

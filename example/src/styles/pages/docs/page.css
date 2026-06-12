@@ -1,0 +1,28 @@
+@import "@jadeja/docs/styles/pages/docs/page";
+
+/* ============================================================================================= */
+
+/*  */
+
+/* ================================================================================================
+  DANGER: LIMIT THIS TO FEW, AS THIS WILL LEAD TO LARGER CSS SIZE.
+================================================================================================ */
+
+/*
+  you can specifically target any element on any page.
+*/
+
+/* styling table column */
+[data-path="/docs/config"] {
+  #how-to-understand-the-config {
+    @siblings match(".table") {
+      thead tr,
+      tbody tr {
+        @childs first {
+          @size min-w-20;
+          @text align-x-center;
+        }
+      }
+    }
+  }
+}

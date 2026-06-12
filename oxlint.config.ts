@@ -5,7 +5,7 @@ import type { OxlintConfig } from "oxlint";
 
 /* ============================================================================================= */
 
-const oxlintConfig: OxlintConfig = defineConfig({ ...oxlintNext });
+const oxlintConfig: OxlintConfig = defineConfig({ ...oxlintNext, ignorePatterns: ["example"] });
 
 /* ============================================================================================= */
 
