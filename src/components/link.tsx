@@ -48,15 +48,7 @@ export const Link = ({ href, navLink, ...rest }: LinkProps): ReactElement<HTMLAn
       return {};
     }
 
-    // trailing slash added for github pages,
-    // so we need to remove it for active link check
-    const isTrailingSlash = pathname !== "/" && pathname.endsWith("/");
-
-    let isActive = (isTrailingSlash ? pathname.slice(0, -1) : pathname) === href;
-
-    if (navLink) {
-      isActive = pathname.includes(href);
-    }
+    const isActive = navLink ? pathname.includes(href) : pathname === href;
 
     return {
       "data-active": (isActive && href !== "/") || undefined,

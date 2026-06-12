@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation.js";
 
-import type { ComponentProps, JSX, ReactElement } from "react";
+import type { ComponentProps, JSX, KeyboardEvent, ReactElement } from "react";
 
 /* ============================================================================================= */
 
@@ -31,5 +31,25 @@ export const Headings = ({
     router.push(`${pathname}#${rest.id}`, { scroll: true });
   };
 
-  return <Component {...rest} onClick={handleClick} />;
+  const handleKeyDown = (event: KeyboardEvent<HTMLHeadingElement>) => {
+    // using `event.key` (Modern standard)
+    if (event.key === "Enter" || event.key === " ") {
+      // required to stop the page from scrolling on Space
+      event.preventDefault();
+      handleClick();
+    }
+  };
+
+  return (
+    <Component
+      tabIndex={0}
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
+      role="button"
+      // oxlint-disable-next-line typescript/no-base-to-string
+      aria-label={`${rest.children}`}
+      onKeyDown={handleKeyDown}
+      onClick={handleClick}
+      {...rest}
+    />
+  );
 };

@@ -58,7 +58,6 @@
   @space my-6 gap-4;
   @layout is-flex;
   @flex flow-col;
-  @text case-capitalize;
 
   @screen md {
     @flex flow-row items-center;

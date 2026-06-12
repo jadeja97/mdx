@@ -4,6 +4,10 @@
   "version": "1.0.0-alpha.0",
   "type": "module",
   "exports": {
+    "./styles/*": {
+      "import": "./dist/styles/*.css",
+      "default": "./dist/styles/*.css"
+    },
     "./components/*": {
       "types": "./dist/components/*.d.ts",
       "import": "./dist/components/*.js",
