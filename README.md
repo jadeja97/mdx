@@ -10,6 +10,10 @@ _an opinionated documentation framework_
 
 Documentation will be added in future releases.
 
+### See In Action
+
+- [`shilpcss`](https://github.com/JadejaHQ/shilpcss)
+
 <br />
 
 ## Community
